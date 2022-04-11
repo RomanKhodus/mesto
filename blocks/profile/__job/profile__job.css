@@ -1,0 +1,9 @@
+.profile__job {
+  margin: 0;
+
+  font-family: "Inter", "Arial";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}

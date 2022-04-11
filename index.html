@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto</title>
+</head>
+
+<body class="root">
+  <div class="page">
+    <header class="header">
+      <img src="./images/logo-white.svg" alt="" class="header__logo">
+    </header>
+    <section class="profile">
+      <div class="profile__info">
+        <img src="./images/avatar.jpg" alt="Аватар автора" class="profile__avatar">
+        <div class="profil__namespace">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <div class="profile__edit-button"></div>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+      </div>
+      <div class="profile__add-button"></div>
+    </section>
+    <section class="elements">
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like elements__like_active"></div>
+        </div>
+      </div>
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like"></div>
+        </div>
+      </div>
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like"></div>
+        </div>
+      </div>
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like"></div>
+        </div>
+      </div>
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like"></div>
+        </div>
+      </div>
+      <div class="elements__card">
+        <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
+        <div class="elements__header">Карачаевск
+          <div class="elements__like"></div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+      <form class="popup__container">
+        <div class="popup__close"></div>
+        <h2 class="popup__header">Редактировать профиль</h3>
+          <fieldset class="popup__user-info">
+            <input type="text" class="popup__field-name" name="username" value="Жак-Ив Кусто" placeholder="Имя"
+              required>
+            <input type="text" class="popup__field-job" name="job" value="Исследователь океана" placeholder="О себе"
+              required>
+          </fieldset>
+          <button type="submit" class="popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./scripts/popap.js"></script>
+</body>
+
+</html>

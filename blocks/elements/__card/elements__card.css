@@ -1,0 +1,11 @@
+.elements__card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 470px) {
+  .elements__card {
+    margin-bottom: 20px;
+  }
+}
