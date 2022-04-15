@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
+
 <body class="root">
   <div class="page">
     <header class="header">
@@ -77,14 +78,16 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <form class="popup-form">
+        <form class="popup-form" name="formProfile">
           <button type="button" class="popup__button-close"></button>
           <h2 class="popup__header">Редактировать профиль</h2>
-            <input type="text" class="popup__form-input popup__form-input_name" name="username" value="" placeholder="Имя" required>
-            <input type="text" class="popup__form-input popup__form-input_job" name="job" value="" placeholder="О себе" required>
+          <input type="text" class="popup__form-input popup__form-input_name" name="username" value="" placeholder="Имя"
+            required>
+          <input type="text" class="popup__form-input popup__form-input_job" name="job" value="" placeholder="О себе"
+            required>
           <button type="submit" class="popup__button-submit">Сохранить</button>
         </form>
-        
+
       </div>
     </div>
   </div>

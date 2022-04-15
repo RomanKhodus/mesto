@@ -5,10 +5,8 @@
   border: 2px solid #fff;
   border-radius: 2px;
   align-self: center;
-
   background: url(../../../images/add-button-icon.svg) no-repeat center;
   transition: 0.3s;
-
   cursor: pointer;
 }
 

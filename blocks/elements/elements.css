@@ -1,6 +1,5 @@
 .elements {
   margin-top: 51px;
-
   display: grid;
   gap: 17px;
   grid-template-columns: repeat(3, 1fr);
@@ -23,5 +22,6 @@
 @media screen and (max-width: 470px) {
   .elements {
     display: block;
+    margin-top: 36px;
   }
 }

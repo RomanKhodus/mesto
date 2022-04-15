@@ -3,12 +3,10 @@
   border: none;
   height: 32px;
   width: 32px;
-
   position: absolute;
   z-index: 100;
   top: -40px;
   right: -40px;
-
   transition: 0.3s;
   cursor: pointer;
 }
