@@ -1,13 +1,14 @@
 .profile__namespace {
-  position: relative;
   align-self: center;
+
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width: 700px) {
   .profile__namespace {
     margin: 0 auto 36px;
     text-align: center;
-    /* justify-content: center; */
   }
 }
 

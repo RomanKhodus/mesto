@@ -3,35 +3,39 @@ const profileJob = document.querySelector('.profile__job');
 const editButton = document.querySelector('.profile__edit-button');
 
 const popup = document.querySelector('.popup');
-const nameInput = document.querySelector('.popup__field-name');
-const jobInput = document.querySelector('.popup__field-job');
-const closeButton = document.querySelector('.popup__close');
+const popupForm = popup.querySelector('.popup-form');
+const nameInput = document.querySelector('.popup__form-input_name');
+const jobInput = document.querySelector('.popup__form-input_job');
+const closeButton = document.querySelector('.popup__button-close');
 
-
-function showPopupTuggle() {
-  nameValue = profileName.textContent;
-  jobValue = profileJob.textContent;
-  nameInput.value = nameValue;
-  jobInput.value = jobValue;
-  popup.classList.toggle('popup_opened');
+function openPopup() {
+  popup.classList.add('popup_opened');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
-function popupOverlayClickHandler(evt) {
-  if (evt.target === evt.currentTarget) {
-    showPopupTuggle();
-  }
-} 
+function closePopup() {
+  popup.classList.remove('popup_opened');
+}
+
+// В разработке:
+
+// function popupOverlayClickHandler(evt) {
+//   if (evt.target === evt.currentTarget) {
+//     closePopup();
+//   }
+// }
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
-  nameValue = nameInput.value;
-  jobValue = jobInput.value;
-  profileName.textContent = nameValue;
-  profileJob.textContent = jobValue;
-    showPopupTuggle()
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopup();
 }
 
-editButton.addEventListener('click', showPopupTuggle);
-closeButton.addEventListener('click', showPopupTuggle);
-popup.addEventListener('click', popupOverlayClickHandler);
-popup.addEventListener('submit', formSubmitHandler);
+editButton.addEventListener('click', openPopup);
+closeButton.addEventListener('click', closePopup);
+popupForm.addEventListener('submit', formSubmitHandler);
+
+// В разработке:
+// popup.addEventListener('click', popupOverlayClickHandler);

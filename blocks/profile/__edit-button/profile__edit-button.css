@@ -1,7 +1,7 @@
 .profile__edit-button {
   display: inline-block;
   box-sizing: border-box;
-  margin-left: 18px;
+  margin: 15px 0px 0 18px;
   width: 24px;
   height: 24px;
 
@@ -9,7 +9,8 @@
   background: url(../../../images/button-icon.svg) no-repeat center;
   transition: 0.3s;
 
-  align-self: center;
+  align-self: start;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {
@@ -21,5 +22,8 @@
     width: 18px;
     height: 18px;
     margin-left: 10px;
+    margin-top: 10px;
+    align-self: flex-start;
+    
   }
 }

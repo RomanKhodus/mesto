@@ -9,9 +9,3 @@
     height: 212px;
   }
 }
-
-@media screen and (max-width: 470px) {
-  .elements__image {
-    background-position: top;
-  }
-}
