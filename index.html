@@ -29,53 +29,17 @@
         <button type="button" class="profile__add-button"></button>
       </section>
       <section class="elements">
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаево-черкессия</h2>
-            <button type="button" class="elements__like elements__like_active"></button>
-          </div>
-        </article>
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаевск</h2>
-            <button type="button" class="elements__like"></button>
-          </div>
-        </article>
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаевск</h2>
-            <button type="button" class="elements__like"></button>
-          </div>
-        </article>
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаевск</h2>
-            <button type="button" class="elements__like"></button>
-          </div>
-        </article>
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаевск</h2>
-            <button type="button" class="elements__like"></button>
-          </div>
-        </article>
-        <article class="elements__card">
-          <img src="./images/Karachaevsk.jpg" alt="Историческое здание" class="elements__image">
-          <div class="elements__figcaption">
-            <h2 class="elements__header">Карачаевск</h2>
-            <button type="button" class="elements__like"></button>
-          </div>
-        </article>
+
+        <!-- Здесь добавляются карточки через JS -->
+
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
+
+    <!-- popup профиля -->
+
     <div class="popup">
       <div class="popup__container">
         <form class="popup-form" name="formProfile">
@@ -87,11 +51,45 @@
             placeholder="О себе" required>
           <button type="submit" class="popup__button-submit">Сохранить</button>
         </form>
+      </div>    
+    </div>
 
+    <!-- popup карточек -->
+
+    <div class="popup add-popup">
+      <div class="popup__container add-popup__container">
+        <form class="popup-form add-popup-form" name="formCard">
+          <button type="button" class="popup__button-close add-popup__button-close"></button>
+          <h2 class="popup__header add-popup__header">Новое место</h2>
+          <input type="text" class="popup__form-input popup__form-input_type_place" name="username" value=""
+            placeholder="Название" required>
+          <input type="text" class="popup__form-input popup__form-input_type_link" name="link" value="" placeholder="Ссылка на картинку"
+            required>
+          <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- popup фото карточки -->
+
+    <div class="popup-image popup">
+      <div class="popup-image__container">
+        <img src="#" alt="Фотография места" class="popup-image__image">
+        <p class="popup-image__caption"></p>
+        <div class="popup-image__button-close popup__button-close"></div>
       </div>
     </div>
   </div>
+  <template id="elements-template">
+    <article class="elements__card">
+      <img src="" alt="" class="elements__image">
+      <button type="button" class="elements__delete"></button>
+      <div class="elements__figcaption">
+        <h2 class="elements__header"></h2>
+        <button type="button" class="elements__like"></button>
+      </div>
+    </article>
+  </template>
   <script src="./scripts/popap.js"></script>
 </body>
-
 </html>
