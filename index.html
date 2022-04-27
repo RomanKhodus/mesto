@@ -63,7 +63,7 @@
           <h2 class="popup__header add-popup__header">Новое место</h2>
           <input type="text" class="popup__form-input popup__form-input_type_place" name="username" value=""
             placeholder="Название" required>
-          <input type="text" class="popup__form-input popup__form-input_type_link" name="link" value="" placeholder="Ссылка на картинку"
+          <input type="url" class="popup__form-input popup__form-input_type_link" name="link" value="" placeholder="Ссылка на картинку"
             required>
           <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
         </form>
@@ -82,7 +82,9 @@
   </div>
   <template id="elements-template">
     <article class="elements__card">
-      <img src="#" alt="Фотография места" class="elements__image">
+      <div class="elements__image-container">
+        <img src="#" alt="Фотография места" class="elements__image">
+      </div>
       <button type="button" class="elements__delete"></button>
       <div class="elements__figcaption">
         <h2 class="elements__header"></h2>
