@@ -60,16 +60,10 @@ function openPopupProfile() {
   inputJobPopupProfile.value = profileJob.textContent;
 
   openPopup(popupProfile);
-
-  buttonClosePopupProfile.addEventListener("click", closePopupProfile);
-  formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
 };
 
 function openPopupAddCard() {
   openPopup(popupAddCard);
-
-  buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
-  formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
 };
 
 function openPopupCardImage(evt) {
@@ -178,3 +172,7 @@ initialCards.forEach((cardsData) => {
 buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
 buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
+buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
+formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
+buttonClosePopupProfile.addEventListener("click", closePopupProfile);
+formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
