@@ -81,8 +81,6 @@ function openPopupCardImage(evt) {
   evt.target.alt = headerText;
 
   openPopup(popupCardImage);
-
-  buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
 }
 
 // Закрытие модалных окон
@@ -175,7 +173,8 @@ initialCards.forEach((cardsData) => {
   renderElementsCard(cardsData);
 });
 
-// События
+// Слушатели событий
 
 buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
+buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
