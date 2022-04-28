@@ -77,8 +77,8 @@ function openPopupCardImage(evt) {
     .closest(".elements__card")
     .querySelector(".elements__header").textContent;
   captionPopupCardImage.textContent = headerText;
-
   imagePopupCardImage.src = evt.target.src;
+  evt.target.alt = headerText;
 
   openPopup(popupCardImage);
 
@@ -152,6 +152,7 @@ const generateElementsCard = (cardsData) => {
   newElementsCard.querySelector(".elements__header").textContent =
     cardsData.name;
   imageOfCard.src = cardsData.link;
+  imageOfCard.alt = cardsData.name;
 
   const buttonLike = newElementsCard.querySelector(".elements__like");
   buttonLike.addEventListener("click", handleLikeToggle);
