@@ -14,13 +14,13 @@ const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonAddCard = document.querySelector(".profile__add-button");
 
 const popupProfile = document.querySelector(".popup");
-const formPopupProfile = popupProfile.querySelector(".popup-form");
+const formPopupProfile = popupProfile.querySelector(".popup__form");
 const inputNamePopupProfile = document.querySelector(
-  ".popup__form-input_type_name"
+  ".popup__input_type_name"
 );
-``;
+
 const inputJobPopupProfile = document.querySelector(
-  ".popup__form-input_type_job"
+  ".popup__input_type_job"
 );
 const buttonClosePopupProfile = document.querySelector(".popup__button-close");
 const buttonSubmitPopupProfile = document.querySelector(
@@ -28,12 +28,12 @@ const buttonSubmitPopupProfile = document.querySelector(
 );
 
 const popupAddCard = document.querySelector(".popup.add-popup");
-const formPopupAddCard = document.querySelector(".add-popup-form");
+const formPopupAddCard = document.querySelector(".add-form");
 const inputPlacePopupAddCard = document.querySelector(
-  ".popup__form-input_type_place"
+  ".popup__input_type_place"
 );
-const inoutLinkPopupAddCard = document.querySelector(
-  ".popup__form-input_type_link"
+const inputLinkPopupAddCard = document.querySelector(
+  ".popup__input_type_link"
 );
 const buttonClosePopupAddCard = document.querySelector(
   ".popup__button-close.add-popup__button-close"
@@ -89,7 +89,7 @@ function closePopupProfile() {
 
 function closePopupAddCard() {
   inputPlacePopupAddCard.value = "";
-  inoutLinkPopupAddCard.value = "";
+  inputLinkPopupAddCard.value = "";
 
   closePopup(popupAddCard);
 }
@@ -114,11 +114,11 @@ const formAddCardSubmitHandler = (evt) => {
 
   renderElementsCard({
     name: inputPlacePopupAddCard.value,
-    link: inoutLinkPopupAddCard.value,
+    link: inputLinkPopupAddCard.value,
   });
 
   inputPlacePopupAddCard.value = "";
-  inoutLinkPopupAddCard.value = "";
+  inputLinkPopupAddCard.value = "";
 
   closePopupAddCard();
 };
@@ -173,6 +173,6 @@ buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
 buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
 buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
-formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
-formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
+// formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
+// formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);

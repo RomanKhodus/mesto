@@ -4,6 +4,7 @@
   height: 282px;
   cursor: pointer;
   opacity: 0.8;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 768px) {

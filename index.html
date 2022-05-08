@@ -42,14 +42,18 @@
 
     <div class="popup">
       <div class="popup__container">
-        <form class="popup-form" name="formProfile">
-          <button type="button" class="popup__button-close"></button>
-          <h2 class="popup__header">Редактировать профиль</h2>
-          <input type="text" class="popup__form-input popup__form-input_type_name" name="username" value=""
-            placeholder="Имя" required>
-          <input type="text" class="popup__form-input popup__form-input_type_job" name="job" value=""
-            placeholder="О себе" required>
-          <button type="submit" class="popup__button-submit">Сохранить</button>
+        <form class="popup__form" name="formProfile" novalidate>
+          <fieldset class="popup__form-set">
+            <button type="button" class="popup__button-close"></button>
+            <h2 class="popup__header">Редактировать профиль</h2>
+            <input id="name-input" type="text" class="popup__input popup__input_type_name" name="username" value=""
+              placeholder="Имя" required minlength="2" maxlength="40">
+            <span class="name-input-error popup__input-error"></span>
+            <input id="job-input" type="text" class="popup__input popup__input_type_job" name="job" value="" placeholder="О себе"
+              required minlength="2" maxlength="200">
+            <span class="job-input-error popup__input-error"></span>
+            <button type="submit" class="popup__button-submit">Сохранить</button>
+          </fieldset> 
         </form>
       </div>    
     </div>
@@ -58,14 +62,18 @@
 
     <div class="popup add-popup">
       <div class="popup__container add-popup__container">
-        <form class="popup-form add-popup-form" name="formCard">
-          <button type="button" class="popup__button-close add-popup__button-close"></button>
-          <h2 class="popup__header add-popup__header">Новое место</h2>
-          <input type="text" class="popup__form-input popup__form-input_type_place" name="username" value=""
-            placeholder="Название" required>
-          <input type="url" class="popup__form-input popup__form-input_type_link" name="link" value="" placeholder="Ссылка на картинку"
-            required>
-          <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
+        <form class="popup__form add-form" name="formCard" novalidate>
+          <fieldset class="popup__form-set">
+            <button type="button" class="popup__button-close add-popup__button-close"></button>
+            <h2 class="popup__header add-popup__header">Новое место</h2>
+            <input type="text" id="place-input" class="popup__input popup__input_type_place" name="username" value="" placeholder="Название"
+              required minlength="2" maxlength="40">
+            <span class="place-input-error popup__input-error"></span>
+            <input type="url" id="link-input" class="popup__input popup__input_type_link" name="link" value="" placeholder="Ссылка на картинку"
+              required>
+            <span class="link-input-error popup__input-error"></span>
+            <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
+          </fieldset>
         </form>
       </div>
     </div>
@@ -80,6 +88,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Шаблон фотокарточки -->
+
   <template id="elements-template">
     <article class="elements__card">
       <div class="elements__image-container">
@@ -94,5 +105,6 @@
   </template>
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/popap.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
