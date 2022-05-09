@@ -167,12 +167,40 @@ initialCards.forEach((cardsData) => {
   renderElementsCard(cardsData);
 });
 
-// Слушатели событий
+const popupOverlayClickHandler = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  };
+};
+
+// Закрытие popup при нажатии вне модального окна
+
+const popupOverlayClose = () => {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener("mousedown", popupOverlayClickHandler);
+  });
+};
+popupOverlayClose();
+
+// Закрытие popup при нажатии esc
+
+const closeEscPopup = (evt) => {
+  if (evt.key === "Escape") {
+    console.log(evt);
+    closePopupProfile();
+    closePopupAddCard();
+    closePopupCardImage();
+  };
+};
+
+// Слушатели событий в глобальной области видимости
 
 buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
-buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
-buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
+formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
-// formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
-// formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
+formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
+buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
+buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
+document.addEventListener("keydown", closeEscPopup);
