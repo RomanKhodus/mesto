@@ -40,7 +40,7 @@
 
     <!-- popup профиля -->
 
-    <div class="popup">
+    <div class="popup profile-popup">
       <div class="popup__container">
         <form class="popup__form" name="formProfile" novalidate>
           <fieldset class="popup__form-set">
@@ -72,7 +72,7 @@
             <input type="url" id="link-input" class="popup__input popup__input_type_link" name="link" value="" placeholder="Ссылка на картинку"
               required>
             <span class="link-input-error popup__input-error"></span>
-            <button type="submit" class="popup__button-submit add-popup__button-submit" disabled>Создать</button>
+            <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
           </fieldset>
         </form>
       </div>
@@ -80,11 +80,11 @@
 
     <!-- popup фото карточки -->
 
-    <div class="popup-image popup">
-      <div class="popup-image__container">
-        <img src="#" alt="Фотография места" class="popup-image__image">
-        <p class="popup-image__caption"></p>
-        <div class="popup-image__button-close popup__button-close"></div>
+    <div class="popup image-popup">
+      <div class="image-popup__container">
+        <img src="#" alt="Фотография места" class="image-popup__image">
+        <p class="image-popup__caption"></p>
+        <div class="image-popup__button-close popup__button-close"></div>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
     </article>
   </template>
   <script src="./scripts/cards.js"></script>
-  <script src="./scripts/popap.js"></script>
   <script src="./scripts/validate.js"></script>
+  <script src="./scripts/popap.js"></script>
 </body>
 </html>
