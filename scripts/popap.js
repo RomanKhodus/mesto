@@ -15,13 +15,9 @@ const buttonAddCard = document.querySelector(".profile__add-button");
 
 const popupProfile = document.querySelector(".profile-popup");
 const formPopupProfile = popupProfile.querySelector(".popup__form");
-const inputNamePopupProfile = document.querySelector(
-  ".popup__input_type_name"
-);
+const inputNamePopupProfile = document.querySelector(".popup__input_type_name");
 
-const inputJobPopupProfile = document.querySelector(
-  ".popup__input_type_job"
-);
+const inputJobPopupProfile = document.querySelector(".popup__input_type_job");
 const buttonClosePopupProfile = document.querySelector(".popup__button-close");
 const buttonSubmitPopupProfile = document.querySelector(
   ".popup__button-submit"
@@ -32,9 +28,7 @@ const formPopupAddCard = document.querySelector(".add-form");
 const inputPlacePopupAddCard = document.querySelector(
   ".popup__input_type_place"
 );
-const inputLinkPopupAddCard = document.querySelector(
-  ".popup__input_type_link"
-);
+const inputLinkPopupAddCard = document.querySelector(".popup__input_type_link");
 const buttonClosePopupAddCard = document.querySelector(
   ".popup__button-close.add-popup__button-close"
 );
@@ -53,31 +47,48 @@ const buttonClosePopupCardImage = document.querySelector(
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  
-  enableValidation(options);
-};
+}
 
 function openPopupProfile() {
   formPopupProfile.reset();
+
+  const inputList = Array.from(
+    formPopupProfile.querySelectorAll(".popup__input")
+  );
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
+
+  toggleButtonState(
+    inputList,
+    buttonSubmitPopupProfile,
+    options.inactiveButtonClass
+  );
 
   openPopup(popupProfile);
 
   document.addEventListener("keydown", (evt) => {
     closeEscPopup(evt, popupProfile);
   });
-};
+}
 
 function openPopupAddCard() {
   formPopupAddCard.reset();
+  const inputList = Array.from(
+    formPopupAddCard.querySelectorAll(".popup__input")
+  );
+
+  toggleButtonState(
+    inputList,
+    buttonSubmitPopupAddCard,
+    options.inactiveButtonClass
+  );
+
   openPopup(popupAddCard);
-  console.log(inputPlacePopupAddCard.validity);
 
   document.addEventListener("keydown", (evt) => {
     closeEscPopup(evt, popupAddCard);
   });
-};
+}
 
 function openPopupCardImage(evt) {
   const headerText = evt.target
@@ -98,11 +109,11 @@ function openPopupCardImage(evt) {
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-};
+}
 
 function closePopupProfile() {
   closePopup(popupProfile);
-};
+}
 
 function closePopupAddCard() {
   inputPlacePopupAddCard.value = "";
@@ -113,7 +124,7 @@ function closePopupAddCard() {
 
 function closePopupCardImage() {
   closePopup(popupCardImage);
-};
+}
 
 // Обработчики
 
@@ -124,7 +135,7 @@ function formPopupProfileSubmitHandler(evt) {
   profileJob.textContent = inputJobPopupProfile.value;
 
   closePopupProfile();
-};
+}
 
 const formAddCardSubmitHandler = (evt) => {
   evt.preventDefault();
@@ -185,13 +196,13 @@ initialCards.forEach((cardsData) => {
 const popupOverlayClickHandler = (evt) => {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
-  };
+  }
 };
 
 // Закрытие popup при нажатии вне модального окна
 
 const popupOverlayClose = () => {
-  const popupList = Array.from(document.querySelectorAll('.popup'));
+  const popupList = Array.from(document.querySelectorAll(".popup"));
   popupList.forEach((popupElement) => {
     popupElement.addEventListener("mousedown", popupOverlayClickHandler);
   });
@@ -204,7 +215,7 @@ const closeEscPopup = (evt, popup) => {
   if (evt.key === "Escape") {
     closePopup(popup);
     document.removeEventListener("keydown", closeEscPopup);
-  };
+  }
 };
 
 // Слушатели событий в глобальной области видимости
