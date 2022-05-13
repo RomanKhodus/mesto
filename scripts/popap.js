@@ -47,6 +47,8 @@ const buttonClosePopupCardImage = document.querySelector(
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+
+  document.addEventListener("keydown", closeEscPopup);
 }
 
 function openPopupProfile() {
@@ -65,10 +67,6 @@ function openPopupProfile() {
   );
 
   openPopup(popupProfile);
-
-  document.addEventListener("keydown", (evt) => {
-    closeEscPopup(evt, popupProfile);
-  });
 }
 
 function openPopupAddCard() {
@@ -84,10 +82,6 @@ function openPopupAddCard() {
   );
 
   openPopup(popupAddCard);
-
-  document.addEventListener("keydown", (evt) => {
-    closeEscPopup(evt, popupAddCard);
-  });
 }
 
 function openPopupCardImage(evt) {
@@ -99,16 +93,14 @@ function openPopupCardImage(evt) {
   evt.target.alt = headerText;
 
   openPopup(popupCardImage);
-
-  document.addEventListener("keydown", (evt) => {
-    closeEscPopup(evt, popupCardImage);
-  });
 }
 
 // Закрытие модалных окон
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+
+  document.removeEventListener("keydown", closeEscPopup);
 }
 
 function closePopupProfile() {
@@ -211,10 +203,10 @@ popupOverlayClose();
 
 // Закрытие popup при нажатии esc
 
-const closeEscPopup = (evt, popup) => {
+const closeEscPopup = (evt) => {
   if (evt.key === "Escape") {
+    const popup = document.querySelector(".popup_opened").closest(".popup");
     closePopup(popup);
-    document.removeEventListener("keydown", closeEscPopup);
   }
 };
 
