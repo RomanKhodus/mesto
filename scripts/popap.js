@@ -45,8 +45,23 @@ const buttonClosePopupCardImage = document.querySelector(
 
 // Открытие модальных окон
 
+const resetInputs = (popup) => {
+  const inputErrorList = Array.from(
+    popup.querySelectorAll(".popup__input-error")
+  );
+  inputErrorList.forEach((inputErrorElement) => {
+    inputErrorElement.classList.remove("popup__input-error_visible");
+  });
+  const inputList = Array.from(popup.querySelectorAll(".popup__input"));
+  inputList.forEach((inputElement) => {
+  inputElement.classList.remove("popup__input_invalid"); 
+  });
+};
+
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+
+  resetInputs(popup);
 
   document.addEventListener("keydown", closeEscPopup);
 }

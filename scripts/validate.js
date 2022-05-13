@@ -4,13 +4,13 @@ const showInputError = (
   errorMessage,
   inputErrorClass,
   errorClass,
-  InputInvalidClass
+  inputInvalidClass
 ) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
-  inputElement.classList.add(InputInvalidClass);
+  inputElement.classList.add(inputInvalidClass);
 };
 
 const hideInputError = (
@@ -18,13 +18,13 @@ const hideInputError = (
   inputElement,
   inputErrorClass,
   errorClass,
-  InputInvalidClass
+  inputInvalidClass
 ) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
-  errorElement.textContent = "";
-  inputElement.classList.remove(InputInvalidClass);
+  // errorElement.textContent = "";
+  inputElement.classList.remove(inputErrorClass);
+  inputElement.classList.remove(inputInvalidClass);
 };
 
 const checkInputValidity = (
@@ -32,7 +32,7 @@ const checkInputValidity = (
   inputElement,
   inputErrorClass,
   errorClass,
-  InputInvalidClass
+  inputInvalidClass
 ) => {
   if (!inputElement.validity.valid) {
     showInputError(
@@ -41,7 +41,7 @@ const checkInputValidity = (
       inputElement.validationMessage,
       inputErrorClass,
       errorClass,
-      InputInvalidClass
+      inputInvalidClass
     );
   } else {
     hideInputError(
@@ -49,7 +49,7 @@ const checkInputValidity = (
       inputElement,
       inputErrorClass,
       errorClass,
-      InputInvalidClass
+      inputInvalidClass
     );
   }
 };
@@ -61,7 +61,7 @@ const setEventListeners = (
   inactiveButtonClass,
   inputErrorClass,
   errorClass,
-  InputInvalidClass
+  inputInvalidClass
 ) => {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
@@ -75,7 +75,7 @@ const setEventListeners = (
         inputElement,
         inputErrorClass,
         errorClass,
-        InputInvalidClass
+        inputInvalidClass
       );
       toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     });
@@ -91,7 +91,7 @@ const enableValidation = (options) => {
     inactiveButtonClass,
     inputErrorClass,
     errorClass,
-    InputInvalidClass,
+    inputInvalidClass,
   } = options;
 
   const formList = Array.from(document.querySelectorAll(formSelector));
@@ -108,7 +108,7 @@ const enableValidation = (options) => {
         inactiveButtonClass,
         inputErrorClass,
         errorClass,
-        InputInvalidClass
+        inputInvalidClass
       );
     });
   });
@@ -138,6 +138,6 @@ const options = {
   inactiveButtonClass: "popup__button-submit_inactive",
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__input-error_visible",
-  InputInvalidClass: "popup__input_invalid",
+  inputInvalidClass: "popup__input_invalid",
 };
 enableValidation(options);
