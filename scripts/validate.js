@@ -22,7 +22,6 @@ const hideInputError = (
 ) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.remove(errorClass);
-  // errorElement.textContent = "";
   inputElement.classList.remove(inputErrorClass);
   inputElement.classList.remove(inputInvalidClass);
 };
@@ -120,13 +119,39 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
+const resetInputsErrors = (
+  popup,
+  inputSelector,
+  inputErrorSelector,
+  errorClass,
+  inputInvalidClass
+) => {
+  const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
+  errorList.forEach((errorElement) => {
+    errorElement.classList.remove(errorClass);
+  });
+
+  const inputList = Array.from(popup.querySelectorAll(inputSelector));
+  inputList.forEach((inputElement) => {
+    inputElement.classList.remove(inputInvalidClass);
+  });
+};
+
+const enableSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.removeAttribute("disabled", "");
+};
+
+const disabledSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute("disabled", "");
+}
+
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "");
+    disabledSubmitButton(buttonElement, inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.removeAttribute("disabled", "");
+    enableSubmitButton(buttonElement, inactiveButtonClass);
   }
 };
 
@@ -137,6 +162,7 @@ const options = {
   submitButtonSelector: ".popup__button-submit",
   inactiveButtonClass: "popup__button-submit_inactive",
   inputErrorClass: "popup__input_type_error",
+  inputErrorSelector: ".popup__input-error",
   errorClass: "popup__input-error_visible",
   inputInvalidClass: "popup__input_invalid",
 };

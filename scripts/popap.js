@@ -45,23 +45,8 @@ const buttonClosePopupCardImage = document.querySelector(
 
 // Открытие модальных окон
 
-const resetInputs = (popup) => {
-  const inputErrorList = Array.from(
-    popup.querySelectorAll(".popup__input-error")
-  );
-  inputErrorList.forEach((inputErrorElement) => {
-    inputErrorElement.classList.remove("popup__input-error_visible");
-  });
-  const inputList = Array.from(popup.querySelectorAll(".popup__input"));
-  inputList.forEach((inputElement) => {
-  inputElement.classList.remove("popup__input_invalid"); 
-  });
-};
-
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-
-  resetInputs(popup);
 
   document.addEventListener("keydown", closeEscPopup);
 }
@@ -69,35 +54,37 @@ function openPopup(popup) {
 function openPopupProfile() {
   formPopupProfile.reset();
 
-  const inputList = Array.from(
-    formPopupProfile.querySelectorAll(".popup__input")
+  resetInputsErrors(
+    popupProfile,
+    options.inputSelector,
+    options.inputErrorSelector,
+    options.errorClass,
+    options.inputInvalidClass
   );
+
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
 
-  toggleButtonState(
-    inputList,
-    buttonSubmitPopupProfile,
-    options.inactiveButtonClass
-  );
+  enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
 
   openPopup(popupProfile);
-}
+};
 
 function openPopupAddCard() {
   formPopupAddCard.reset();
-  const inputList = Array.from(
-    formPopupAddCard.querySelectorAll(".popup__input")
+
+  resetInputsErrors(
+    popupAddCard,
+    options.inputSelector,
+    options.inputErrorSelector,
+    options.errorClass,
+    options.inputInvalidClass
   );
 
-  toggleButtonState(
-    inputList,
-    buttonSubmitPopupAddCard,
-    options.inactiveButtonClass
-  );
+  disabledSubmitButton(buttonSubmitPopupAddCard, options.inactiveButtonClass);
 
   openPopup(popupAddCard);
-}
+};
 
 function openPopupCardImage(evt) {
   const headerText = evt.target
@@ -108,7 +95,7 @@ function openPopupCardImage(evt) {
   evt.target.alt = headerText;
 
   openPopup(popupCardImage);
-}
+};
 
 // Закрытие модалных окон
 
@@ -116,22 +103,22 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 
   document.removeEventListener("keydown", closeEscPopup);
-}
+};
 
 function closePopupProfile() {
   closePopup(popupProfile);
-}
+};
 
 function closePopupAddCard() {
   inputPlacePopupAddCard.value = "";
   inputLinkPopupAddCard.value = "";
 
   closePopup(popupAddCard);
-}
+};
 
 function closePopupCardImage() {
   closePopup(popupCardImage);
-}
+};
 
 // Обработчики
 
@@ -142,7 +129,7 @@ function formPopupProfileSubmitHandler(evt) {
   profileJob.textContent = inputJobPopupProfile.value;
 
   closePopupProfile();
-}
+};
 
 const formAddCardSubmitHandler = (evt) => {
   evt.preventDefault();
@@ -159,9 +146,7 @@ const formAddCardSubmitHandler = (evt) => {
 };
 
 const handleLikeToggle = (evt) => {
-  evt.target
-    .closest(".elements__like")
-    .classList.toggle("elements__like_active");
+  evt.target.classList.toggle("elements__like_active");
 };
 
 const handleDeleteCard = (evt) => {
@@ -220,9 +205,10 @@ popupOverlayClose();
 
 const closeEscPopup = (evt) => {
   if (evt.key === "Escape") {
-    const popup = document.querySelector(".popup_opened").closest(".popup");
+    const popup = document.querySelector(".popup_opened");
+
     closePopup(popup);
-  }
+  };
 };
 
 // Слушатели событий в глобальной области видимости
