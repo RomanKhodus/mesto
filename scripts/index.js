@@ -1,3 +1,6 @@
+import { initialCards } from "../utils/cards.js";
+import Card from "./Card.js";
+
 // Шаблоны
 
 const elementTemplate = document
@@ -6,7 +9,7 @@ const elementTemplate = document
 
 // DOM Элементы
 
-const cardsContainer = document.querySelector(".elements");
+// const cardsContainer = document.querySelector(".elements");
 
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
@@ -36,16 +39,16 @@ const buttonSubmitPopupAddCard = document.querySelector(
   ".add-popup__button-submit"
 );
 
-const popupCardImage = document.querySelector(".image-popup");
-const imagePopupCardImage = document.querySelector(".image-popup__image");
-const captionPopupCardImage = document.querySelector(".image-popup__caption");
-const buttonClosePopupCardImage = document.querySelector(
-  ".image-popup__button-close"
-);
+// const popupCardImage = document.querySelector(".image-popup");
+// const imagePopupCardImage = document.querySelector(".image-popup__image");
+// const captionPopupCardImage = document.querySelector(".image-popup__caption");
+// const buttonClosePopupCardImage = document.querySelector(
+//   ".image-popup__button-close"
+// );
 
 // Открытие модальных окон
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
 
   document.addEventListener("keydown", closeEscPopup);
@@ -54,13 +57,7 @@ function openPopup(popup) {
 function openPopupProfile() {
   formPopupProfile.reset();
 
-  resetInputsErrors(
-    popupProfile,
-    options.inputSelector,
-    options.inputErrorSelector,
-    options.errorClass,
-    options.inputInvalidClass
-  );
+  resetInputsErrors(popupProfile, options);
 
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
@@ -68,57 +65,51 @@ function openPopupProfile() {
   enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
 
   openPopup(popupProfile);
-};
+}
 
 function openPopupAddCard() {
   formPopupAddCard.reset();
 
-  resetInputsErrors(
-    popupAddCard,
-    options.inputSelector,
-    options.inputErrorSelector,
-    options.errorClass,
-    options.inputInvalidClass
-  );
+  resetInputsErrors(popupAddCard, options);
 
   disabledSubmitButton(buttonSubmitPopupAddCard, options.inactiveButtonClass);
 
   openPopup(popupAddCard);
-};
+}
 
-function openPopupCardImage(evt) {
-  const headerText = evt.target
-    .closest(".elements__card")
-    .querySelector(".elements__header").textContent;
-  captionPopupCardImage.textContent = headerText;
-  imagePopupCardImage.src = evt.target.src;
-  evt.target.alt = headerText;
+// export function openPopupCardImage(evt) {
+//   const headerText = evt.target
+//     .closest(".elements__card")
+//     .querySelector(".elements__header").textContent;
+//   captionPopupCardImage.textContent = headerText;
+//   imagePopupCardImage.src = evt.target.src;
+//   evt.target.alt = headerText;
 
-  openPopup(popupCardImage);
-};
+//   openPopup(popupCardImage);
+// };
 
 // Закрытие модалных окон
 
-function closePopup(popup) {
+export function closePopup(popup) {
   popup.classList.remove("popup_opened");
 
   document.removeEventListener("keydown", closeEscPopup);
-};
+}
 
 function closePopupProfile() {
   closePopup(popupProfile);
-};
+}
 
 function closePopupAddCard() {
   inputPlacePopupAddCard.value = "";
   inputLinkPopupAddCard.value = "";
 
   closePopup(popupAddCard);
-};
+}
 
-function closePopupCardImage() {
-  closePopup(popupCardImage);
-};
+// function closePopupCardImage() {
+//   closePopup(popupCardImage);
+// }
 
 // Обработчики
 
@@ -129,7 +120,7 @@ function formPopupProfileSubmitHandler(evt) {
   profileJob.textContent = inputJobPopupProfile.value;
 
   closePopupProfile();
-};
+}
 
 const formAddCardSubmitHandler = (evt) => {
   evt.preventDefault();
@@ -145,11 +136,11 @@ const formAddCardSubmitHandler = (evt) => {
   closePopupAddCard();
 };
 
-const handleLikeToggle = (evt) => {
-  evt.target.classList.toggle("elements__like_active");
-};
+// const handleLikeToggle = (evt) => {
+//   evt.target.classList.toggle("elements__like_active");
+// };
 
-const handleDeleteCard = (evt) => {
+export const handleDeleteCard = (evt) => {
   evt.target.closest(".elements__card").remove();
 };
 
@@ -164,8 +155,8 @@ const generateElementsCard = (cardsData) => {
   imageOfCard.src = cardsData.link;
   imageOfCard.alt = cardsData.name;
 
-  const buttonLike = newElementsCard.querySelector(".elements__like");
-  buttonLike.addEventListener("click", handleLikeToggle);
+  // const buttonLike = newElementsCard.querySelector(".elements__like");
+  // buttonLike.addEventListener("click", handleLikeToggle);
 
   const buttonDelete = newElementsCard.querySelector(".elements__delete");
   buttonDelete.addEventListener("click", handleDeleteCard);
@@ -182,7 +173,10 @@ const renderElementsCard = (cardsData) => {
 };
 
 initialCards.forEach((cardsData) => {
-  renderElementsCard(cardsData);
+  const card = new Card(cardsData, "#elements-template");
+  const cardElement = card.generateCard();
+
+  document.querySelector(".elements").append(cardElement);
 });
 
 const popupOverlayClickHandler = (evt) => {
@@ -208,7 +202,7 @@ const closeEscPopup = (evt) => {
     const popup = document.querySelector(".popup_opened");
 
     closePopup(popup);
-  };
+  }
 };
 
 // Слушатели событий в глобальной области видимости
@@ -219,5 +213,4 @@ formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
 formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
 buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
-buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
-// document.addEventListener("keydown", closeEscPopup);
+// buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);

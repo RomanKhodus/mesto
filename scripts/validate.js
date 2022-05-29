@@ -82,23 +82,24 @@ const setEventListeners = (
 };
 
 const enableValidation = (options) => {
-  const {
-    formSelector,
-    formSet,
-    inputSelector,
-    submitButtonSelector,
-    inactiveButtonClass,
-    inputErrorClass,
-    errorClass,
-    inputInvalidClass,
-  } = options;
+  const formSelector = options.formSelector;
+  const formSet = options.formSet;
+  const inputSelector = options.inputSelector;
+  const submitButtonSelector = options.submitButtonSelector;
+  const inactiveButtonClass = options.inactiveButtonClass;
+  const inputErrorClass = options.inputErrorClass;
+  const errorClass = options.errorClass;
+  const inputInvalidClass = options.inputInvalidClass;
 
   const formList = Array.from(document.querySelectorAll(formSelector));
+
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", function (evt) {
       evt.preventDefault();
     });
+
     const fieldsetList = Array.from(formElement.querySelectorAll(formSet));
+
     fieldsetList.forEach((fieldSet) => {
       setEventListeners(
         fieldSet,
@@ -119,14 +120,14 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const resetInputsErrors = (
-  popup,
-  inputSelector,
-  inputErrorSelector,
-  errorClass,
-  inputInvalidClass
-) => {
+const resetInputsErrors = (popup, options) => {
+  console.log("Добрались");
+  const inputSelector = options.inputSelector;
+  const inputErrorSelector = options.inputErrorSelector;
+  const errorClass = options.errorClass;
+  const inputInvalidClass = options.inputInvalidClass;
   const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
+
   errorList.forEach((errorElement) => {
     errorElement.classList.remove(errorClass);
   });
@@ -145,7 +146,7 @@ const enableSubmitButton = (buttonElement, inactiveButtonClass) => {
 const disabledSubmitButton = (buttonElement, inactiveButtonClass) => {
   buttonElement.classList.add(inactiveButtonClass);
   buttonElement.setAttribute("disabled", "");
-}
+};
 
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   if (hasInvalidInput(inputList)) {
@@ -166,4 +167,5 @@ const options = {
   errorClass: "popup__input-error_visible",
   inputInvalidClass: "popup__input_invalid",
 };
+
 enableValidation(options);
