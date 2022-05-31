@@ -1,11 +1,18 @@
 import { initialCards } from "../utils/cards.js";
+import { options } from "../utils/options.js";
+import FormValidator from "./FormValidator.js"
+import {
+  enableSubmitButton,
+  disabledSubmitButton,
+  resetInputsErrors,
+} from "./validate.js";
 import Card from "./Card.js";
 
 // Шаблоны
 
-const elementTemplate = document
-  .querySelector("#elements-template")
-  .content.querySelector(".elements__card");
+// const elementTemplate = document
+//   .querySelector("#elements-template")
+//   .content.querySelector(".elements__card");
 
 // DOM Элементы
 
@@ -146,38 +153,31 @@ export const handleDeleteCard = (evt) => {
 
 // Генерация карточки
 
-const generateElementsCard = (cardsData) => {
-  const newElementsCard = elementTemplate.cloneNode(true);
-  const imageOfCard = newElementsCard.querySelector(".elements__image");
+// const generateElementsCard = (cardsData) => {
+//   const newElementsCard = elementTemplate.cloneNode(true);
+//   const imageOfCard = newElementsCard.querySelector(".elements__image");
 
-  newElementsCard.querySelector(".elements__header").textContent =
-    cardsData.name;
-  imageOfCard.src = cardsData.link;
-  imageOfCard.alt = cardsData.name;
+//   newElementsCard.querySelector(".elements__header").textContent =
+//     cardsData.name;
+//   imageOfCard.src = cardsData.link;
+//   imageOfCard.alt = cardsData.name;
 
-  // const buttonLike = newElementsCard.querySelector(".elements__like");
-  // buttonLike.addEventListener("click", handleLikeToggle);
+// const buttonLike = newElementsCard.querySelector(".elements__like");
+// buttonLike.addEventListener("click", handleLikeToggle);
 
-  const buttonDelete = newElementsCard.querySelector(".elements__delete");
-  buttonDelete.addEventListener("click", handleDeleteCard);
+//   const buttonDelete = newElementsCard.querySelector(".elements__delete");
+//   buttonDelete.addEventListener("click", handleDeleteCard);
 
-  imageOfCard.addEventListener("click", openPopupCardImage);
+//   imageOfCard.addEventListener("click", openPopupCardImage);
 
-  return newElementsCard;
-};
+//   return newElementsCard;
+// };
 
 // Рендеринг Карточек
 
-const renderElementsCard = (cardsData) => {
-  cardsContainer.append(generateElementsCard(cardsData));
-};
-
-initialCards.forEach((cardsData) => {
-  const card = new Card(cardsData, "#elements-template");
-  const cardElement = card.generateCard();
-
-  document.querySelector(".elements").append(cardElement);
-});
+// const renderElementsCard = (cardsData) => {
+//   cardsContainer.append(generateElementsCard(cardsData));
+// };
 
 const popupOverlayClickHandler = (evt) => {
   if (evt.target === evt.currentTarget) {
@@ -205,6 +205,19 @@ const closeEscPopup = (evt) => {
   }
 };
 
+const formProfile = new FormValidator(options, formPopupProfile);
+formProfile.enableValidation();
+
+const formAddCard = new FormValidator(options, formPopupAddCard);
+formAddCard.enableValidation();
+
+initialCards.forEach((cardsData) => {
+  const card = new Card(cardsData, "#elements-template");
+  const cardElement = card.generateCard();
+
+  document.querySelector(".elements").append(cardElement);
+});
+
 // Слушатели событий в глобальной области видимости
 
 buttonEditProfile.addEventListener("click", openPopupProfile);
@@ -213,4 +226,3 @@ formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
 formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
 buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
-// buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
