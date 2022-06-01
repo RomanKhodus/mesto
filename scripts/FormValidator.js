@@ -7,7 +7,6 @@ import {
 export default class FormValidator {
   constructor(options, formElement) {
     this.formElement = formElement;
-
     this.formSelector = options.formSelector;
     this.formSet = options.formSet;
     this.inputSelector = options.inputSelector;
@@ -71,7 +70,7 @@ export default class FormValidator {
         inputInvalidClass
       );
     }
-  };
+  }
 
   enableValidation() {
     this.formElement.addEventListener("submit", (evt) => {
@@ -93,4 +92,12 @@ export default class FormValidator {
       );
     });
   }
+
+  // _toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+  //   if (hasInvalidInput(inputList)) {
+  //     disabledSubmitButton(buttonElement, inactiveButtonClass);
+  //   } else {
+  //     enableSubmitButton(buttonElement, inactiveButtonClass);
+  //   }
+  // }
 }

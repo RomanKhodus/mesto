@@ -159,16 +159,3 @@ export const toggleButtonState = (
   }
 };
 
-// const options = {
-//   formSelector: ".popup__form",
-//   formSet: ".popup__form-set",
-//   inputSelector: ".popup__input",
-//   submitButtonSelector: ".popup__button-submit",
-//   inactiveButtonClass: "popup__button-submit_inactive",
-//   inputErrorClass: "popup__input_type_error",
-//   inputErrorSelector: ".popup__input-error",
-//   errorClass: "popup__input-error_visible",
-//   inputInvalidClass: "popup__input_invalid",
-// };
-
-// enableValidation(options);

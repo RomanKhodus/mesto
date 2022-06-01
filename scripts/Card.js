@@ -16,7 +16,7 @@ export default class Card {
     return cardElement;
   }
 
-  generateCard() {
+  _generateCard() {
     this._element = this._getElement();
     this._setEventListeners();
 
@@ -26,6 +26,11 @@ export default class Card {
 
     return this._element;
   }
+
+  renderCard() {
+    const cardsContainer = document.querySelector(".elements");
+    cardsContainer.append(this._generateCard());
+};
 
   _openPopupCardImage(evt) {
     const popupCardImage = document.querySelector(".image-popup");
