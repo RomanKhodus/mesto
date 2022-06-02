@@ -92,12 +92,4 @@ export default class FormValidator {
       );
     });
   }
-
-  // _toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
-  //   if (hasInvalidInput(inputList)) {
-  //     disabledSubmitButton(buttonElement, inactiveButtonClass);
-  //   } else {
-  //     enableSubmitButton(buttonElement, inactiveButtonClass);
-  //   }
-  // }
 }
