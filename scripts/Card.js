@@ -1,4 +1,10 @@
-import { openPopup, closePopup } from "./index.js";
+import {
+  openPopup,
+  closePopupCardImage,
+  popupCardImage,
+  captionPopupCardImage,
+  imagePopupCardImage,
+} from "./index.js";
 
 export default class Card {
   constructor(data, selector) {
@@ -16,45 +22,23 @@ export default class Card {
     return cardElement;
   }
 
-  _generateCard() {
+  generateCard() {
     this._element = this._getElement();
     this._setEventListeners();
 
     this._element.querySelector(".elements__image").src = this._image;
+    this._element.querySelector(".elements__image").alt = this._name;
 
     this._element.querySelector(".elements__header").textContent = this._name;
 
     return this._element;
   }
 
-  renderCard() {
-    const cardsContainer = document.querySelector(".elements");
-    cardsContainer.append(this._generateCard());
-};
-
-  _openPopupCardImage(evt) {
-    const popupCardImage = document.querySelector(".image-popup");
-    const captionPopupCardImage = document.querySelector(
-      ".image-popup__caption"
-    );
-    const imagePopupCardImage = document.querySelector(".image-popup__image");
-    const headerText = evt.target
-      .closest(".elements__card")
-      .querySelector(".elements__header").textContent;
-
-    captionPopupCardImage.textContent = headerText;
-
-    imagePopupCardImage.src = evt.target.src;
-
-    evt.target.alt = headerText;
+  _openPopupCardImage() {
+    captionPopupCardImage.textContent = this._name;
+    imagePopupCardImage.src = this._image;
 
     openPopup(popupCardImage);
-  }
-
-  _closePopupCardImage() {
-    const popupCardImage = document.querySelector(".image-popup");
-
-    closePopup(popupCardImage);
   }
 
   _setEventListeners() {
@@ -69,19 +53,17 @@ export default class Card {
 
     buttonLike.addEventListener("click", this._handleLikeToggle);
 
-    imageElement.addEventListener("click", this._openPopupCardImage);
+    imageElement.addEventListener("click", () => this._openPopupCardImage());
 
-    buttonClosePopupCardImage.addEventListener(
-      "click",
-      this._closePopupCardImage
-    );
+    buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
   }
 
   _handleDeleteCard(evt) {
     evt.target.closest(".elements__card").remove();
+    this._element = null;
   }
 
   _handleLikeToggle(evt) {
     evt.target.classList.toggle("elements__like_active");
-  };
+  }
 }

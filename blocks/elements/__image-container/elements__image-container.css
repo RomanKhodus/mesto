@@ -1,3 +1,4 @@
 .elements__image-container {
   background-color: #000;
+  overflow: hidden;
 }

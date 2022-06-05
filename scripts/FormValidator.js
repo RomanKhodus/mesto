@@ -1,8 +1,4 @@
-import {
-  toggleButtonState,
-  showInputError,
-  hideInputError,
-} from "./validate.js";
+import { enableSubmitButton, disabledSubmitButton } from "./index.js";
 
 export default class FormValidator {
   constructor(options, formElement) {
@@ -29,7 +25,7 @@ export default class FormValidator {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
 
-    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+    this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -40,9 +36,37 @@ export default class FormValidator {
           errorClass,
           inputInvalidClass
         );
-        toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+        this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
       });
     });
+  }
+
+  _showInputError(
+    formElement,
+    inputElement,
+    errorMessage,
+    inputErrorClass,
+    errorClass,
+    inputInvalidClass
+  ) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(inputErrorClass);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(errorClass);
+    inputElement.classList.add(inputInvalidClass);
+  }
+
+  _hideInputError(
+    formElement,
+    inputElement,
+    inputErrorClass,
+    errorClass,
+    inputInvalidClass
+  ) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    errorElement.classList.remove(errorClass);
+    inputElement.classList.remove(inputErrorClass);
+    inputElement.classList.remove(inputInvalidClass);
   }
 
   _checkInputValidity(
@@ -53,7 +77,7 @@ export default class FormValidator {
     inputInvalidClass
   ) {
     if (!inputElement.validity.valid) {
-      showInputError(
+      this._showInputError(
         formElement,
         inputElement,
         inputElement.validationMessage,
@@ -62,13 +86,27 @@ export default class FormValidator {
         inputInvalidClass
       );
     } else {
-      hideInputError(
+      this._hideInputError(
         formElement,
         inputElement,
         inputErrorClass,
         errorClass,
         inputInvalidClass
       );
+    }
+  }
+
+  _hasInvalidInput(inputList) {
+    return inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    });
+  }
+
+  _toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+    if (this._hasInvalidInput(inputList)) {
+      disabledSubmitButton(buttonElement, inactiveButtonClass);
+    } else {
+      enableSubmitButton(buttonElement, inactiveButtonClass);
     }
   }
 

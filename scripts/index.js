@@ -1,14 +1,8 @@
 import { initialCards } from "../utils/cards.js";
 import { options } from "../utils/options.js";
-import FormValidator from "./FormValidator.js";
-import {
-  enableSubmitButton,
-  disabledSubmitButton,
-  resetInputsErrors,
-} from "./validate.js";
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
-// const cardsContainer = document.querySelector(".elements");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
@@ -20,10 +14,7 @@ const inputNamePopupProfile = document.querySelector(".popup__input_type_name");
 
 const inputJobPopupProfile = document.querySelector(".popup__input_type_job");
 const buttonClosePopupProfile = document.querySelector(".popup__button-close");
-const buttonSubmitPopupProfile = document.querySelector(
-  ".popup__button-submit"
-);
-
+а
 const popupAddCard = document.querySelector(".add-popup");
 const formPopupAddCard = document.querySelector(".add-form");
 const inputPlacePopupAddCard = document.querySelector(
@@ -35,6 +26,13 @@ const buttonClosePopupAddCard = document.querySelector(
 );
 const buttonSubmitPopupAddCard = document.querySelector(
   ".add-popup__button-submit"
+);
+export const popupCardImage = document.querySelector(".image-popup");
+export const captionPopupCardImage = document.querySelector(
+  ".image-popup__caption"
+);
+export const imagePopupCardImage = document.querySelector(
+  ".image-popup__image"
 );
 
 // Открытие модальных окон
@@ -53,7 +51,7 @@ function openPopupProfile() {
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
 
-  enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
+  // enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
 
   openPopup(popupProfile);
 }
@@ -67,6 +65,8 @@ function openPopupAddCard() {
 
   openPopup(popupAddCard);
 }
+
+// Закрытие модальных окон
 
 export function closePopup(popup) {
   popup.classList.remove("popup_opened");
@@ -85,6 +85,11 @@ function closePopupAddCard() {
   closePopup(popupAddCard);
 }
 
+export function closePopupCardImage() {
+  const popupCardImage = document.querySelector(".image-popup");
+  closePopup(popupCardImage);
+}
+
 // Обработчики
 
 function formPopupProfileSubmitHandler(evt) {
@@ -98,23 +103,20 @@ function formPopupProfileSubmitHandler(evt) {
 
 const formAddCardSubmitHandler = (evt) => {
   evt.preventDefault();
-  const card = new Card(
+  const cardElement = newCard(
     {
       name: inputPlacePopupAddCard.value,
       link: inputLinkPopupAddCard.value,
     },
     "#elements-template"
   );
-  card.renderCard();
+  const card = cardElement.generateCard();
+  renderCard(card);
 
   inputPlacePopupAddCard.value = "";
   inputLinkPopupAddCard.value = "";
 
   closePopupAddCard();
-};
-
-export const handleDeleteCard = (evt) => {
-  evt.target.closest(".elements__card").remove();
 };
 
 const popupOverlayClickHandler = (evt) => {
@@ -123,7 +125,32 @@ const popupOverlayClickHandler = (evt) => {
   }
 };
 
-// Закрытие popup при нажатии вне модального окна
+export const enableSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.removeAttribute("disabled", "");
+};
+
+export const disabledSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute("disabled", "");
+};
+
+const resetInputsErrors = (popup, options) => {
+  const inputSelector = options.inputSelector;
+  const inputErrorSelector = options.inputErrorSelector;
+  const errorClass = options.errorClass;
+  const inputInvalidClass = options.inputInvalidClass;
+  const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
+
+  errorList.forEach((errorElement) => {
+    errorElement.classList.remove(errorClass);
+  });
+
+  const inputList = Array.from(popup.querySelectorAll(inputSelector));
+  inputList.forEach((inputElement) => {
+    inputElement.classList.remove(inputInvalidClass);
+  });
+};
 
 const popupOverlayClose = () => {
   const popupList = Array.from(document.querySelectorAll(".popup"));
@@ -133,8 +160,6 @@ const popupOverlayClose = () => {
 };
 popupOverlayClose();
 
-// Закрытие popup при нажатии esc
-
 const closeEscPopup = (evt) => {
   if (evt.key === "Escape") {
     const popup = document.querySelector(".popup_opened");
@@ -143,15 +168,34 @@ const closeEscPopup = (evt) => {
   }
 };
 
+// Валидация форм
+
 const formProfile = new FormValidator(options, formPopupProfile);
 formProfile.enableValidation();
 
 const formAddCard = new FormValidator(options, formPopupAddCard);
 formAddCard.enableValidation();
 
+// Рендер карточки
+
+const renderCard = (card) => {
+  const cardsContainer = document.querySelector(".elements");
+  cardsContainer.prepend(card);
+};
+
+// Создание экземпляра Card
+
+const newCard = (data, selector) => {
+  const cardElement = new Card(data, selector);
+  return cardElement;
+};
+
+// Рендер дефолтных карточек
+
 initialCards.forEach((data) => {
-  const card = new Card(data, "#elements-template");
-  card.renderCard();
+  const cardElement = newCard(data, "#elements-template");
+  const card = cardElement.generateCard();
+  renderCard(card);
 });
 
 // Слушатели событий в глобальной области видимости
