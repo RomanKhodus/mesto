@@ -14,7 +14,6 @@ const inputNamePopupProfile = document.querySelector(".popup__input_type_name");
 
 const inputJobPopupProfile = document.querySelector(".popup__input_type_job");
 const buttonClosePopupProfile = document.querySelector(".popup__button-close");
-а
 const popupAddCard = document.querySelector(".add-popup");
 const formPopupAddCard = document.querySelector(".add-form");
 const inputPlacePopupAddCard = document.querySelector(
