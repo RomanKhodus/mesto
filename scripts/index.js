@@ -27,6 +27,9 @@ const buttonSubmitPopupAddCard = document.querySelector(
   ".add-popup__button-submit"
 );
 export const popupCardImage = document.querySelector(".image-popup");
+export const buttonClosePopupCardImage = document.querySelector(
+  ".image-popup__button-close"
+);
 export const captionPopupCardImage = document.querySelector(
   ".image-popup__caption"
 );
@@ -43,6 +46,10 @@ export function openPopup(popup) {
 }
 
 function openPopupProfile() {
+  const buttonSubmitPopupProfile = document.querySelector(
+    ".popup__button-submit"
+  );
+
   formPopupProfile.reset();
 
   resetInputsErrors(popupProfile, options);
@@ -50,7 +57,7 @@ function openPopupProfile() {
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
 
-  // enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
+  enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
 
   openPopup(popupProfile);
 }
@@ -91,7 +98,7 @@ export function closePopupCardImage() {
 
 // Обработчики
 
-function formPopupProfileSubmitHandler(evt) {
+function submitHandlerFormPopupProfile(evt) {
   evt.preventDefault();
 
   profileName.textContent = inputNamePopupProfile.value;
@@ -100,16 +107,15 @@ function formPopupProfileSubmitHandler(evt) {
   closePopupProfile();
 }
 
-const formAddCardSubmitHandler = (evt) => {
+const submitHandlerFormAddCard = (evt) => {
   evt.preventDefault();
-  const cardElement = newCard(
+  const card = createCardObject(
     {
       name: inputPlacePopupAddCard.value,
       link: inputLinkPopupAddCard.value,
     },
     "#elements-template"
   );
-  const card = cardElement.generateCard();
   renderCard(card);
 
   inputPlacePopupAddCard.value = "";
@@ -184,16 +190,16 @@ const renderCard = (card) => {
 
 // Создание экземпляра Card
 
-const newCard = (data, selector) => {
+const createCardObject = (data, selector) => {
   const cardElement = new Card(data, selector);
-  return cardElement;
+  const card = cardElement.generateCard();
+  return card;
 };
 
 // Рендер дефолтных карточек
 
 initialCards.forEach((data) => {
-  const cardElement = newCard(data, "#elements-template");
-  const card = cardElement.generateCard();
+  const card = createCardObject(data, "#elements-template");
   renderCard(card);
 });
 
@@ -201,7 +207,7 @@ initialCards.forEach((data) => {
 
 buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
-formPopupProfile.addEventListener("submit", formPopupProfileSubmitHandler);
+formPopupProfile.addEventListener("submit", submitHandlerFormPopupProfile);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
-formPopupAddCard.addEventListener("submit", formAddCardSubmitHandler);
+formPopupAddCard.addEventListener("submit", submitHandlerFormAddCard);
 buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
