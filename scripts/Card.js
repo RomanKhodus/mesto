@@ -1,8 +1,6 @@
 import {
   openPopup,
-  closePopupCardImage,
   popupCardImage,
-  buttonClosePopupCardImage,
   captionPopupCardImage,
   imagePopupCardImage,
 } from "./index.js";
@@ -53,8 +51,6 @@ export default class Card {
     this._elementImage.addEventListener("click", () =>
       this._openPopupCardImage()
     );
-
-    buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
   }
 
   _handleDeleteCard() {

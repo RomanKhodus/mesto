@@ -103,7 +103,7 @@ function closePopupAddCard() {
   closePopup(popupAddCard);
 }
 
-export function closePopupCardImage() {
+function closePopupCardImage() {
   const popupCardImage = document.querySelector(".image-popup");
   closePopup(popupCardImage);
 }
@@ -182,9 +182,10 @@ initialCards.forEach((data) => {
 
 // Слушатели событий в глобальной области видимости
 
+formPopupProfile.addEventListener("submit", submitHandlerFormPopupProfile);
+formPopupAddCard.addEventListener("submit", submitHandlerFormAddCard);
 buttonEditProfile.addEventListener("click", openPopupProfile);
 buttonAddCard.addEventListener("click", openPopupAddCard);
-formPopupProfile.addEventListener("submit", submitHandlerFormPopupProfile);
 buttonClosePopupProfile.addEventListener("click", closePopupProfile);
-formPopupAddCard.addEventListener("submit", submitHandlerFormAddCard);
 buttonClosePopupAddCard.addEventListener("click", closePopupAddCard);
+buttonClosePopupCardImage.addEventListener("click", closePopupCardImage);
