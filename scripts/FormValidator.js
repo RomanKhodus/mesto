@@ -1,4 +1,4 @@
-import { enableSubmitButton, disabledSubmitButton } from "./index.js";
+// import { enableSubmitButton, disabledSubmitButton } from "./index.js";
 
 export default class FormValidator {
   constructor(options, formElement) {
@@ -104,10 +104,37 @@ export default class FormValidator {
 
   _toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     if (this._hasInvalidInput(inputList)) {
-      disabledSubmitButton(buttonElement, inactiveButtonClass);
+      this.disabledSubmitButton(buttonElement, inactiveButtonClass);
     } else {
-      enableSubmitButton(buttonElement, inactiveButtonClass);
+      this.enableSubmitButton(buttonElement, inactiveButtonClass);
     }
+  }
+
+  enableSubmitButton (buttonElement, inactiveButtonClass) {
+    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.removeAttribute("disabled", "");
+  };
+
+  disabledSubmitButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "");
+  }
+
+  resetInputsErrors(popup, options) {
+    const inputSelector = options.inputSelector;
+    const inputErrorSelector = options.inputErrorSelector;
+    const errorClass = options.errorClass;
+    const inputInvalidClass = options.inputInvalidClass;
+    const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
+
+    errorList.forEach((errorElement) => {
+      errorElement.classList.remove(errorClass);
+    });
+
+    const inputList = Array.from(popup.querySelectorAll(inputSelector));
+    inputList.forEach((inputElement) => {
+      inputElement.classList.remove(inputInvalidClass);
+    });
   }
 
   enableValidation() {

@@ -46,18 +46,24 @@ export function openPopup(popup) {
 }
 
 function openPopupProfile() {
+  const formProfile = new FormValidator(options, formPopupProfile);
   const buttonSubmitPopupProfile = document.querySelector(
     ".popup__button-submit"
   );
 
   formPopupProfile.reset();
 
-  resetInputsErrors(popupProfile, options);
+  formProfile.enableValidation();
+
+  formProfile.resetInputsErrors(popupProfile, options);
 
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
 
-  enableSubmitButton(buttonSubmitPopupProfile, options.inactiveButtonClass);
+  formProfile.enableSubmitButton(
+    buttonSubmitPopupProfile,
+    options.inactiveButtonClass
+  );
 
   openPopup(popupProfile);
 }
@@ -65,9 +71,15 @@ function openPopupProfile() {
 function openPopupAddCard() {
   formPopupAddCard.reset();
 
-  resetInputsErrors(popupAddCard, options);
+  const formAddCard = new FormValidator(options, formPopupAddCard);
+  formAddCard.enableValidation();
 
-  disabledSubmitButton(buttonSubmitPopupAddCard, options.inactiveButtonClass);
+  formAddCard.resetInputsErrors(popupAddCard, options);
+
+  formAddCard.disabledSubmitButton(
+    buttonSubmitPopupAddCard,
+    options.inactiveButtonClass
+  );
 
   openPopup(popupAddCard);
 }
@@ -130,33 +142,6 @@ const popupOverlayClickHandler = (evt) => {
   }
 };
 
-export const enableSubmitButton = (buttonElement, inactiveButtonClass) => {
-  buttonElement.classList.remove(inactiveButtonClass);
-  buttonElement.removeAttribute("disabled", "");
-};
-
-export const disabledSubmitButton = (buttonElement, inactiveButtonClass) => {
-  buttonElement.classList.add(inactiveButtonClass);
-  buttonElement.setAttribute("disabled", "");
-};
-
-const resetInputsErrors = (popup, options) => {
-  const inputSelector = options.inputSelector;
-  const inputErrorSelector = options.inputErrorSelector;
-  const errorClass = options.errorClass;
-  const inputInvalidClass = options.inputInvalidClass;
-  const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
-
-  errorList.forEach((errorElement) => {
-    errorElement.classList.remove(errorClass);
-  });
-
-  const inputList = Array.from(popup.querySelectorAll(inputSelector));
-  inputList.forEach((inputElement) => {
-    inputElement.classList.remove(inputInvalidClass);
-  });
-};
-
 const popupOverlayClose = () => {
   const popupList = Array.from(document.querySelectorAll(".popup"));
   popupList.forEach((popupElement) => {
@@ -172,14 +157,6 @@ const closeEscPopup = (evt) => {
     closePopup(popup);
   }
 };
-
-// Валидация форм
-
-const formProfile = new FormValidator(options, formPopupProfile);
-formProfile.enableValidation();
-
-const formAddCard = new FormValidator(options, formPopupAddCard);
-formAddCard.enableValidation();
 
 // Рендер карточки
 
