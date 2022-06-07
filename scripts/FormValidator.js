@@ -1,11 +1,11 @@
-// import { enableSubmitButton, disabledSubmitButton } from "./index.js";
-
 export default class FormValidator {
   constructor(options, formElement) {
     this.formElement = formElement;
     this.formSelector = options.formSelector;
     this.formSet = options.formSet;
-    this.inputSelector = options.inputSelector;
+    this.inputList = Array.from(
+      formElement.querySelectorAll(options.inputSelector)
+    );
     this.submitButtonSelector = options.submitButtonSelector;
     this.inactiveButtonClass = options.inactiveButtonClass;
     this.inputErrorClass = options.inputErrorClass;
@@ -15,19 +15,17 @@ export default class FormValidator {
 
   _setEventListeners(
     formElement,
-    inputSelector,
     submitButtonSelector,
     inactiveButtonClass,
     inputErrorClass,
     errorClass,
     inputInvalidClass
   ) {
-    const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
 
-    this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+    this._toggleButtonState(this.inputList, buttonElement, inactiveButtonClass);
 
-    inputList.forEach((inputElement) => {
+    this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(
           formElement,
@@ -36,7 +34,7 @@ export default class FormValidator {
           errorClass,
           inputInvalidClass
         );
-        this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+        this._toggleButtonState(this.inputList, buttonElement, inactiveButtonClass);
       });
     });
   }
@@ -148,7 +146,6 @@ export default class FormValidator {
     fieldsetList.forEach((fieldSet) => {
       this._setEventListeners(
         fieldSet,
-        this.inputSelector,
         this.submitButtonSelector,
         this.inactiveButtonClass,
         this.inputErrorClass,
