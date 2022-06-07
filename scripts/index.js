@@ -55,7 +55,7 @@ function openPopupProfile() {
 
   formProfile.enableValidation();
 
-  formProfile.resetInputsErrors(popupProfile, options);
+  formProfile.resetInputsErrors(options);
 
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
@@ -74,7 +74,7 @@ function openPopupAddCard() {
   const formAddCard = new FormValidator(options, formPopupAddCard);
   formAddCard.enableValidation();
 
-  formAddCard.resetInputsErrors(popupAddCard, options);
+  formAddCard.resetInputsErrors(options);
 
   formAddCard.disabledSubmitButton(
     buttonSubmitPopupAddCard,

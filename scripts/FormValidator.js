@@ -11,6 +11,9 @@ export default class FormValidator {
     );
     this.inactiveButtonClass = options.inactiveButtonClass;
     this.inputErrorClass = options.inputErrorClass;
+    this.errorList = Array.from(
+      formElement.querySelectorAll(options.inputErrorSelector)
+    );
     this.errorClass = options.errorClass;
     this.inputInvalidClass = options.inputInvalidClass;
   }
@@ -125,19 +128,15 @@ export default class FormValidator {
     buttonElement.setAttribute("disabled", "");
   }
 
-  resetInputsErrors(popup, options) {
-    const inputSelector = options.inputSelector;
-    const inputErrorSelector = options.inputErrorSelector;
+  resetInputsErrors(options) {
     const errorClass = options.errorClass;
     const inputInvalidClass = options.inputInvalidClass;
-    const errorList = Array.from(popup.querySelectorAll(inputErrorSelector));
 
-    errorList.forEach((errorElement) => {
+    this.errorList.forEach((errorElement) => {
       errorElement.classList.remove(errorClass);
     });
 
-    const inputList = Array.from(popup.querySelectorAll(inputSelector));
-    inputList.forEach((inputElement) => {
+    this.inputList.forEach((inputElement) => {
       inputElement.classList.remove(inputInvalidClass);
     });
   }
