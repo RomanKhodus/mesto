@@ -6,7 +6,9 @@ export default class FormValidator {
     this.inputList = Array.from(
       formElement.querySelectorAll(options.inputSelector)
     );
-    this.submitButtonSelector = options.submitButtonSelector;
+    this.buttonElement = formElement.querySelector(
+      options.submitButtonSelector
+    );
     this.inactiveButtonClass = options.inactiveButtonClass;
     this.inputErrorClass = options.inputErrorClass;
     this.errorClass = options.errorClass;
@@ -15,15 +17,16 @@ export default class FormValidator {
 
   _setEventListeners(
     formElement,
-    submitButtonSelector,
     inactiveButtonClass,
     inputErrorClass,
     errorClass,
     inputInvalidClass
   ) {
-    const buttonElement = formElement.querySelector(submitButtonSelector);
-
-    this._toggleButtonState(this.inputList, buttonElement, inactiveButtonClass);
+    this._toggleButtonState(
+      this.inputList,
+      this.buttonElement,
+      inactiveButtonClass
+    );
 
     this.inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -34,7 +37,11 @@ export default class FormValidator {
           errorClass,
           inputInvalidClass
         );
-        this._toggleButtonState(this.inputList, buttonElement, inactiveButtonClass);
+        this._toggleButtonState(
+          this.inputList,
+          this.buttonElement,
+          inactiveButtonClass
+        );
       });
     });
   }
@@ -146,7 +153,6 @@ export default class FormValidator {
     fieldsetList.forEach((fieldSet) => {
       this._setEventListeners(
         fieldSet,
-        this.submitButtonSelector,
         this.inactiveButtonClass,
         this.inputErrorClass,
         this.errorClass,
