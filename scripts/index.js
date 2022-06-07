@@ -91,7 +91,6 @@ function closePopupAddCard() {
 }
 
 function closePopupCardImage() {
-  const popupCardImage = document.querySelector(".image-popup");
   closePopup(popupCardImage);
 }
 
