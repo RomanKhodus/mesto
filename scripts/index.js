@@ -50,10 +50,7 @@ function openPopupProfile() {
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
   
-  formProfile.enableSubmitButton(
-    formProfile.buttonElement,
-    formProfile.inactiveButtonClass
-  );
+  formProfile.enableSubmitButton();
 
   openPopup(popupProfile);
 }
@@ -63,10 +60,7 @@ function openPopupAddCard() {
 
   formAddCard.resetInputsErrors();
 
-  formAddCard.disabledSubmitButton(
-    formAddCard.buttonElement,
-    formAddCard.inactiveButtonClass
-  );
+  formAddCard.disabledSubmitButton();
 
   openPopup(popupAddCard);
 }
