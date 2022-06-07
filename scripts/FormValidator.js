@@ -146,18 +146,13 @@ export default class FormValidator {
     this.formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-    const fieldsetList = Array.from(
-      this.formElement.querySelectorAll(this.formSet)
-    );
 
-    fieldsetList.forEach((fieldSet) => {
-      this._setEventListeners(
-        fieldSet,
-        this.inactiveButtonClass,
-        this.inputErrorClass,
-        this.errorClass,
-        this.inputInvalidClass
-      );
-    });
+    this._setEventListeners(
+      this.formElement,
+      this.inactiveButtonClass,
+      this.inputErrorClass,
+      this.errorClass,
+      this.inputInvalidClass
+    );
   }
 }
