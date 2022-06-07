@@ -128,17 +128,17 @@ export default class FormValidator {
     buttonElement.setAttribute("disabled", "");
   }
 
-  resetInputsErrors(options) {
+  resetInputsErrors() {
 
-    const errorClass = options.errorClass;
-    const inputInvalidClass = options.inputInvalidClass;
+    // const errorClass = options.errorClass;
+    // const inputInvalidClass = options.inputInvalidClass;
 
     this.errorList.forEach((errorElement) => {
-      errorElement.classList.remove(errorClass);
+      errorElement.classList.remove(this.errorClass);
     });
 
     this.inputList.forEach((inputElement) => {
-      inputElement.classList.remove(inputInvalidClass);
+      inputElement.classList.remove(this.inputInvalidClass);
     });
   }
 

@@ -23,9 +23,6 @@ const inputLinkPopupAddCard = document.querySelector(".popup__input_type_link");
 const buttonClosePopupAddCard = document.querySelector(
   ".popup__button-close.add-popup__button-close"
 );
-const buttonSubmitPopupAddCard = document.querySelector(
-  ".add-popup__button-submit"
-);
 export const popupCardImage = document.querySelector(".image-popup");
 export const buttonClosePopupCardImage = document.querySelector(
   ".image-popup__button-close"
@@ -46,23 +43,16 @@ export function openPopup(popup) {
 }
 
 function openPopupProfile() {
-  const formProfile = new FormValidator(options, formPopupProfile);
-  const buttonSubmitPopupProfile = document.querySelector(
-    ".popup__button-submit"
-  );
-
   formPopupProfile.reset();
 
-  formProfile.enableValidation();
-
-  formProfile.resetInputsErrors(options);
+  formProfile.resetInputsErrors();
 
   inputNamePopupProfile.value = profileName.textContent;
   inputJobPopupProfile.value = profileJob.textContent;
-
+  
   formProfile.enableSubmitButton(
-    buttonSubmitPopupProfile,
-    options.inactiveButtonClass
+    formProfile.buttonElement,
+    formProfile.inactiveButtonClass
   );
 
   openPopup(popupProfile);
@@ -71,14 +61,11 @@ function openPopupProfile() {
 function openPopupAddCard() {
   formPopupAddCard.reset();
 
-  const formAddCard = new FormValidator(options, formPopupAddCard);
-  formAddCard.enableValidation();
-
-  formAddCard.resetInputsErrors(options);
+  formAddCard.resetInputsErrors();
 
   formAddCard.disabledSubmitButton(
-    buttonSubmitPopupAddCard,
-    options.inactiveButtonClass
+    formAddCard.buttonElement,
+    formAddCard.inactiveButtonClass
   );
 
   openPopup(popupAddCard);
@@ -179,6 +166,14 @@ initialCards.forEach((data) => {
   const card = createCardObject(data, "#elements-template");
   renderCard(card);
 });
+
+// Валидация форм
+const formAddCard = new FormValidator(options, formPopupAddCard);
+formAddCard.enableValidation();
+
+const formProfile = new FormValidator(options, formPopupProfile);
+formProfile.enableValidation();
+
 
 // Слушатели событий в глобальной области видимости
 
