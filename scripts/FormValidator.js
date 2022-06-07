@@ -129,6 +129,7 @@ export default class FormValidator {
   }
 
   resetInputsErrors(options) {
+
     const errorClass = options.errorClass;
     const inputInvalidClass = options.inputInvalidClass;
 
