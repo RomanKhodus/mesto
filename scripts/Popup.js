@@ -19,8 +19,7 @@ export default class Popup {
     console.log('close() заработал');
     
     this._element.classList.remove("popup_opened");
-
-    document.removeEventListener("keydown", this._handleEscClose);
+    document.removeEventListener("click", this.close);
   }
 
   // содержит логику закрытия попапа клавишей Esc.

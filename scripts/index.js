@@ -150,7 +150,6 @@ const cardList = new Section(
     items: initialCards,
     renderer: (item) => {
       const itemElement = new Card(item, "#elements-template", {
-        
         handleCardClick: () => {
           const popupImage = new PopupWithImage(item, ".image-popup");
           popupImage.open();
@@ -160,7 +159,7 @@ const cardList = new Section(
       cardList.addItem(cards);
     },
   },
-  cardListSection,
+  cardListSection
 );
 cardList.renderItems();
 
@@ -185,6 +184,9 @@ const popupAddCardObj = new PopupWithForm({
 popupAddCardObj.setEventListeners();
 
 // Слушатели событий в глобальной области видимости
+buttonEditProfile.addEventListener("click", () => popupProfileObject.open());
+buttonAddCard.addEventListener("click", () => popupAddCardObj.open());
+
 // formPopupProfile.addEventListener("submit", submitHandlerFormPopupProfile);
 // formPopupAddCard.addEventListener("submit", submitHandlerFormAddCard);
 
