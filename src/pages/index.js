@@ -1,3 +1,5 @@
+import "../pages/index.css";
+
 import {
   initialCards,
   options,
@@ -9,12 +11,12 @@ import {
   formPopupProfile,
   formPopupAddCard,
 } from "../utils/constants.js";
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import PopupWithForm from "./PopupWithForm.js";
-import PopupWithImage from "./PopupWithImage.js";
-import Section from "./Section.js";
-import UserInfo from "./UserInfo.js";
+import Card from "../scripts/Card.js";
+import FormValidator from "../scripts/FormValidator.js";
+import PopupWithForm from "../scripts/PopupWithForm.js";
+import PopupWithImage from "../scripts/PopupWithImage.js";
+import Section from "../scripts/Section.js";
+import UserInfo from "../scripts/UserInfo.js";
 
 // Рендер дефолтных карточек
 const cardList = new Section(
@@ -42,7 +44,6 @@ formAddCard.enableValidation();
 
 const formProfile = new FormValidator(options, formPopupProfile);
 formProfile.enableValidation();
-
 
 // Попапы с формой
 const popupProfileObject = new PopupWithForm({
@@ -76,10 +77,11 @@ const userInfo = new UserInfo(".profile__name", ".profile__job");
 // Слушатели событий в глобальной области видимости
 buttonEditProfile.addEventListener("click", () => userInfo.getUserInfo());
 buttonEditProfile.addEventListener("click", () => userInfo.setUserInfo());
-buttonEditProfile.addEventListener("click", () => formProfile.resetInputsErrors());
-buttonEditProfile.addEventListener(
-  "click",
-  () => formProfile.enableSubmitButton()
+buttonEditProfile.addEventListener("click", () =>
+  formProfile.resetInputsErrors()
+);
+buttonEditProfile.addEventListener("click", () =>
+  formProfile.enableSubmitButton()
 );
 buttonEditProfile.addEventListener("click", () => popupProfileObject.open());
 
