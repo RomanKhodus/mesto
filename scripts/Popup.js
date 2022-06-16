@@ -6,8 +6,6 @@ export default class Popup {
   }
 
   open() {
-    console.log("open() заработал");
-
     this._element.classList.add("popup_opened");
 
     document.addEventListener("keydown", (evt) =>
@@ -16,8 +14,6 @@ export default class Popup {
   }
 
   close() {
-    console.log('close() заработал');
-    
     this._element.classList.remove("popup_opened");
     document.removeEventListener("click", this.close);
   }

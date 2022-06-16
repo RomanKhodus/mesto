@@ -8,7 +8,7 @@
 export default class Card {
   constructor(item, selector, {handleCardClick}) {
     this._image = item.link;
-    this._name = item.name;
+    this.name = item.name;
     this._selector = selector;
     this._element = this._getElement();
     this._elementImage = this._element.querySelector(".elements__image");
@@ -27,19 +27,12 @@ export default class Card {
   generateCard() {
     this._setEventListeners();
     this._elementImage.src = this._image;
-    this._elementImage.alt = this._name;
+    this._elementImage.alt = this.name;
 
-    this._element.querySelector(".elements__header").textContent = this._name;
+    this._element.querySelector(".elements__header").textContent = this.name;
 
     return this._element;
   }
-
-  // _openPopupCardImage() {
-  //   captionPopupCardImage.textContent = this._name;
-  //   imagePopupCardImage.src = this._image;
-
-  //   openPopup(popupCardImage);
-  // }
 
   _setEventListeners() {
     const buttonDelete = this._element.querySelector(".elements__delete");

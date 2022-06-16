@@ -46,7 +46,7 @@
           <fieldset class="popup__form-set">
             <button type="button" class="popup__button-close"></button>
             <h2 class="popup__header">Редактировать профиль</h2>
-            <input id="name-input" type="text" class="popup__input popup__input_type_name" name="username" value=""
+            <input id="name-input" type="text" class="popup__input popup__input_type_name" name="name" value=""
               placeholder="Имя" required minlength="2" maxlength="40">
             <span class="name-input-error popup__input-error"></span>
             <input id="job-input" type="text" class="popup__input popup__input_type_job" name="job" value="" placeholder="О себе"
@@ -66,7 +66,7 @@
           <fieldset class="popup__form-set">
             <button type="button" class="popup__button-close add-popup__button-close"></button>
             <h2 class="popup__header add-popup__header">Новое место</h2>
-            <input type="text" id="place-input" class="popup__input popup__input_type_place" name="username" value="" placeholder="Название"
+            <input type="text" id="place-input" class="popup__input popup__input_type_place" name="name" value="" placeholder="Название"
               required minlength="2" maxlength="40">
             <span class="place-input-error popup__input-error"></span>
             <input type="url" id="link-input" class="popup__input popup__input_type_link" name="link" value="" placeholder="Ссылка на картинку"
@@ -106,6 +106,7 @@
   <script type="module" src="./utils/constants.js"></script>
   <script type="module" src="./scripts/FormValidator.js"></script>
   <script type="module" src="./scripts/index.js"></script>
+  <script type="module" src="./scripts/Section.js"></script>
   <script type="module" src="./scripts/Popup.js"></script>
   <script type="module" src="./scripts/PopupWithImage.js"></script>
   <script type="module" src="./scripts/PopupWithForm.js"></script>
