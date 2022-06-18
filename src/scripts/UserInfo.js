@@ -1,14 +1,9 @@
 // import {profileName, profileJob} from '../utils/constants.js'
 
 export default class UserInfo {
-  constructor(nameSelector, jobSelector) {
-    this._element = document.querySelector(".profile-popup");
-
-    this._nameElement = document.querySelector(nameSelector);
-    this._jobElement = document.querySelector(jobSelector);
-
-    this._nameInput = this._element.querySelector("#name-input");
-    this._jobInput = this._element.querySelector("#job-input");
+  constructor(userData) {
+    this._nameElement = document.querySelector(userData.nameSelector);
+    this._jobElement = document.querySelector(userData.jobSelector);
   }
 
   getUserInfo(){
@@ -18,7 +13,10 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo(){
+  setUserInfo(nameinput, jobinput){
+    this._nameInput = document.querySelector(nameinput);
+    this._jobInput = document.querySelector(jobinput);
+
     this._nameInput.value = this._formValues.name;
     this._jobInput.value = this._formValues.job;
   }
