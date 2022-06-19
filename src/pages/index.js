@@ -4,8 +4,8 @@ import {
   initialCards,
   options,
   cardListSection,
-  profileName,
-  profileJob,
+  nameInput,
+  jobInput,
   buttonEditProfile,
   buttonAddCard,
   formPopupProfile,
@@ -19,10 +19,10 @@ import Section from "../scripts/Section.js";
 import UserInfo from "../scripts/UserInfo.js";
 
 // Создание объекта карточки
-const generateCardObj = (item, selector, {handleCardClick}) => {
-  const cardObj = new Card(item, selector, {handleCardClick});
+const generateCardObj = (item, selector, { handleCardClick }) => {
+  const cardObj = new Card(item, selector, { handleCardClick });
   return cardObj.generateCard();
-}
+};
 
 // Попап с изображением
 const popupImage = new PopupWithImage(".image-popup");
@@ -37,7 +37,7 @@ const cardList = new Section(
         handleCardClick: () => {
           popupImage.open({
             image: item.link,
-            name: item.name
+            name: item.name,
           });
         },
       });
@@ -49,11 +49,11 @@ const cardList = new Section(
 cardList.renderItems();
 
 // Попапы с формой
+
 const popupProfileObject = new PopupWithForm({
   selector: ".profile-popup",
   handleFormSubmit: (formData) => {
-    profileName.textContent = formData.name;
-    profileJob.textContent = formData.job;
+    userInfo.setUserInfo(formData.name, formData.job);
   },
 });
 popupProfileObject.setEventListeners();
@@ -61,14 +61,14 @@ popupProfileObject.setEventListeners();
 const popupAddCardObj = new PopupWithForm({
   selector: ".add-popup",
   handleFormSubmit: (formData) => {
-    const card = generateCardObj(formData, "#elements-template",{
+    const card = generateCardObj(formData, "#elements-template", {
       handleCardClick: () => {
         popupImage.open({
           image: formData.link,
-          name: formData.name
+          name: formData.name,
         });
-      }
-    })
+      },
+    });
     cardList.addItem(card);
   },
 });
@@ -89,10 +89,14 @@ formProfile.enableValidation();
 
 // Слушатели событий в глобальной области видимости
 buttonEditProfile.addEventListener("click", () => {
-  userInfo.getUserInfo();
-  userInfo.setUserInfo("#name-input", "#job-input");
   formProfile.resetInputsErrors();
+
   formProfile.enableSubmitButton();
+
+  const data = userInfo.getUserInfo();
+  nameInput.value = data.name;
+  jobInput.value = data.job;
+
   popupProfileObject.open();
 });
 
@@ -101,4 +105,3 @@ buttonAddCard.addEventListener("click", () => {
   formAddCard.disabledSubmitButton();
   popupAddCardObj.open();
 });
-

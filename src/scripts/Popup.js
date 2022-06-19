@@ -2,7 +2,6 @@ export default class Popup {
   constructor(selector) {
     this._selector = selector;
     this._popup = document.querySelector(selector);
-    // this._element = this._getElement();
     this._buttonClose = this._popup.querySelector(".popup__button-close");
   }
 
@@ -40,10 +39,4 @@ export default class Popup {
       this._handleOverlayClickClose(evt)
     );
   }
-
-  // _getElement() {
-  //   const popupElement = document.querySelector(this._selector);
-
-  //   return popupElement;
-  // }
 }

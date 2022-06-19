@@ -38,12 +38,14 @@ export const options = {
 };
 
 export const cardListSection = ".elements";
-export const profileName = document.querySelector(".profile__name");
-export const profileJob = document.querySelector(".profile__job");
 export const buttonEditProfile = document.querySelector(
   ".profile__edit-button"
 );
 export const buttonAddCard = document.querySelector(".profile__add-button");
+
 const popupProfileClass = document.querySelector(".profile-popup");
 export const formPopupProfile = popupProfileClass.querySelector(".popup__form");
+export const nameInput = formPopupProfile.querySelector('#name-input');
+export const jobInput = formPopupProfile.querySelector('#job-input');
+
 export const formPopupAddCard = document.querySelector(".add-form");

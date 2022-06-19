@@ -14,10 +14,15 @@ export default class UserInfo {
   }
 
   setUserInfo(nameinput, jobinput){
-    this._nameInput = document.querySelector(nameinput);
-    this._jobInput = document.querySelector(jobinput);
+    this._nameElement.textContent = nameinput;
+    this._jobElement.textContent = jobinput;
 
-    this._nameInput.value = this._formValues.name;
-    this._jobInput.value = this._formValues.job;
+
+    
+    // this._nameInput = document.querySelector(nameinput);
+    // this._jobInput = document.querySelector(jobinput);
+
+    // this._nameInput.value = this._formValues.name;
+    // this._jobInput.value = this._formValues.job;
   }
 }
