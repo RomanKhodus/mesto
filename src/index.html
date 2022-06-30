@@ -19,8 +19,8 @@
           <img src= "<%=require('./images/avatar.jpg')%>"  alt="Аватар автора" class="profile__avatar">
           <div class="profile__namespace">
             <div class="profile__container">
-              <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <p class="profile__job">Исследователь океана</p>
+              <h1 class="profile__name"></h1>
+              <p class="profile__job"></p>
             </div>
             <button type="button" class="profile__edit-button"></button>
           </div>
@@ -30,7 +30,6 @@
       <section class="elements">
 
         <!-- Здесь добавляются карточки через JS -->
-
       </section>
     </main>
     <footer class="footer">
@@ -38,7 +37,6 @@
     </footer>
 
     <!-- popup профиля -->
-
     <div class="popup profile-popup">
       <div class="popup__container">
         <form class="popup__form" name="formProfile" novalidate>
@@ -57,8 +55,7 @@
       </div>    
     </div>
 
-    <!-- popup карточек -->
-
+    <!-- popup добавления карточек -->
     <div class="popup add-popup">
       <div class="popup__container add-popup__container">
         <form class="popup__form add-form" name="formCard" novalidate>
@@ -77,8 +74,7 @@
       </div>
     </div>
 
-    <!-- popup фото карточки -->
-
+    <!-- popup просмота карточки -->
     <div class="popup image-popup">
       <div class="image-popup__container">
         <img src="#" alt="Фотография места" class="image-popup__image">
@@ -89,7 +85,6 @@
   </div>
 
   <!-- Шаблон фотокарточки -->
-
   <template id="elements-template">
     <article class="elements__card">
       <div class="elements__image-container">
