@@ -1,8 +1,8 @@
 .elements__delete {
+  visibility: hidden;
   position: absolute;
   top: 20px;
   right: 20px;
-  
   padding: 0;
   margin: 0;
   width: 18px;

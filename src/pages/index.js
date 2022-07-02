@@ -24,10 +24,12 @@ import Api from "../scripts/Api.js";
 //Создание обьекта api
 const api = new Api(API_CONFIG);
 
-// Отображение актуальных данных пользователя в профиле
-api.getUserInfo().then((userData) => {
-  userInfo.setUserInfo(userData);
-});
+const me = api.getUserInfo();
+
+  // Отображение актуальных данных пользователя в профиле
+  me.then((userData) => {
+    return userInfo.setUserInfo(userData);
+  });
 
 // Данные юзера
 const userInfo = new UserInfo({
@@ -38,20 +40,20 @@ const userInfo = new UserInfo({
 // Создание объекта карточки
 const generateCardObj = (item, selector, { handleCardClick }) => {
   const cardObj = new Card(item, selector, { handleCardClick });
+  cardObj.cardIsOwner(me, item.owner._id);
   return cardObj.generateCard();
 };
 
 // Попап с изображением
 const popupImage = new PopupWithImage(".image-popup");
 popupImage.setEventListeners();
-
 // Рендер дефолтных карточек
 const cardList = new Section(
   {
     items: api
       .getInitialCards()
       .then((items) => items)
-      .catch((err) => console.log(err)),
+      .catch((err) => Promise.reject(`Ошибка: ${err.status}`)),
     renderer: (item) => {
       const card = generateCardObj(item, "#elements-template", {
         handleCardClick: () => {
@@ -61,20 +63,27 @@ const cardList = new Section(
           });
         },
       });
+      // cardList.itemIsOwner(me, item.owner._id);
       cardList.addItem(card);
     },
   },
   cardListSection
 );
 cardList.renderItems();
+
 // Попапы с формой
 
 const popupProfile = new PopupWithForm({
   selector: ".profile-popup",
   handleFormSubmit: (userData) => {
-    api.setUserInfo(userData).then((userData) => {
-      userInfo.setUserInfo(userData);
-    });
+    api.renderLoading(".popup__button-submit", true);
+    api
+      .setUserInfo(userData)
+      .then((userData) => {
+        userInfo.setUserInfo(userData);
+      })
+      .catch((err) => Promise.reject(`Ошибка: ${err.status}`))
+      .finally(() => api.renderLoading(".popup__button-submit", false));
   },
 });
 popupProfile.setEventListeners();
@@ -82,6 +91,7 @@ popupProfile.setEventListeners();
 const popupAddCardObj = new PopupWithForm({
   selector: ".add-popup",
   handleFormSubmit: (formData) => {
+    api.renderLoading(".add-popup__button-submit", true);
     const card = generateCardObj(formData, "#elements-template", {
       handleCardClick: () => {
         popupImage.open({
@@ -92,9 +102,15 @@ const popupAddCardObj = new PopupWithForm({
     });
     api.setNewCard(formData);
     cardList.addItem(card);
+    api.renderLoading(".add-popup__button-submit", false);
   },
 });
 popupAddCardObj.setEventListeners();
+
+// const popupRemoveCardObj = new PopupWithForm({
+//   selector: ".remove-popup",
+//   handleFormSubmit: ;
+// });
 
 // Валидация форм
 const formAddCard = new FormValidator(options, formPopupAddCard);

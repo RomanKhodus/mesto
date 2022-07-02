@@ -54,4 +54,28 @@ export default class Api {
       }),
     });
   }
+
+  renderLoading(buttonSelector, isLoading){
+    const btnSubmit = document.querySelector(buttonSelector);
+    if (isLoading) {
+      btnSubmit.textContent = "Сохранение...";
+    } else {
+      btnSubmit.textContent = "Сохранить";
+    }
+  }
+
+  likeCounter(evt, cardData) {
+    if (evt.target.classList.contain("elements__like_active")) {
+      return setNewCard(cardData);
+    }
+  }
+
+  _addLikeCounter(evt) {
+    if (evt.target.classList.contain("elements__like_active")) {
+      return fetch(``);
+    }
+  }
+
+  _removeLikeCounter() {}
+
 }

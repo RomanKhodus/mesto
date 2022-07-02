@@ -13,10 +13,10 @@ export default class UserInfo {
 
   setUserInfo(userData) {
     this._nameElement.textContent = userData.name;
-    if (userData.job) {
-      this._jobElement.textContent = userData.job;
-    } else if (userData.about) {
+    // if (userData.job) {
+    //   this._jobElement.textContent = userData.job;
+    // } else if (userData.about) {
       this._jobElement.textContent = userData.about;
-    }
+    // }
   }
 }

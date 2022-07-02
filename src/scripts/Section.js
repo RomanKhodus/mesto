@@ -8,13 +8,21 @@ export default class Section {
 
   renderItems() {
     this._renderedItems
-    .then(items => {
-      items.forEach(item => this._renderer(item));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((items) => {
+        items.forEach((item) => this._renderer(item));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+  
+  // itemIsOwner(ownerInfo, userId) {
+  //   ownerInfo.then((res) => {
+  //     if(res._id == userId){
+  //       return 
+  //     }
+  //   })
+  // }
 
   addItem(element) {
     this._container.prepend(element);
