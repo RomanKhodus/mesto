@@ -1,19 +1,14 @@
-// import {
-//   openPopup,
-//   popupCardImage,
-//   captionPopupCardImage,
-//   imagePopupCardImage,
-// } from "./index.js";
-
 export default class Card {
-  constructor(item, selector, { handleCardClick }) {
-    this._image = item.link;
-    this._name = item.name;
+  constructor(item, selector, { handleCardClick }, api, userId, popupDeletCard) {
+    this._item = item;
     this._selector = selector;
+    this._handleCardClick = handleCardClick;
+    this._api = api;
+    this._userId = userId;
+
     this._element = this._getElement();
     this._elementImage = this._element.querySelector(".elements__image");
     this._buttonDelete = this._element.querySelector(".elements__delete");
-    this._handleCardClick = handleCardClick;
   }
 
   _getElement() {
@@ -21,26 +16,19 @@ export default class Card {
       .querySelector(this._selector)
       .content.querySelector(".elements__card")
       .cloneNode(true);
-
     return cardElement;
-  }
-
-  cardIsOwner(ownerInfo, userId) {
-    ownerInfo.then((res) => {
-      if (res._id == userId) {
-        return this._buttonDelete.classList.add("elements__delete_visible"); 
-      }
-    });
   }
 
   generateCard() {
     this._setEventListeners();
-    this._elementImage.src = this._image;
-    this._elementImage.alt = this._name;
-
-    this._element.querySelector(".elements__header").textContent = this._name;
-
-    return this._element;
+    this._elementImage.src = this._item.link;
+    this._elementImage.alt = this._item.name;
+    this._element.querySelector(".elements__header").textContent =
+      this._item.name;
+    if (this._userId !== this._item.owner._id) {
+      this._buttonDelete.remove();
+    }
+    return this._element; 
   }
 
   _setEventListeners() {
@@ -48,6 +36,7 @@ export default class Card {
     const buttonLike = this._element.querySelector(".elements__like");
 
     buttonDelete.addEventListener("click", () => {
+      this._api.deleteCard(this._item._id);
       this._handleDeleteCard();
     });
 

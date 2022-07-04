@@ -12,7 +12,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(`Ошибка в InitialCard: ${res.status}`);
     });
   }
 
@@ -24,23 +24,23 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(`Ошибка в getUserInfo: ${res.status}`);
     });
   }
 
-  setUserInfo(userData) {
+  setUserInfo(user) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        name: userData.name,
-        about: userData.job,
+        name: user.name,
+        about: user.job,
       }),
     }).then((res) => {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(`Ошибка в setUserInfo: ${res.status}`);
     });
   }
 
@@ -52,30 +52,32 @@ export default class Api {
         name: cardData.name,
         link: cardData.link,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в setNewCard: ${res.status}`);
     });
   }
 
-  renderLoading(buttonSelector, isLoading){
-    const btnSubmit = document.querySelector(buttonSelector);
+  deleteCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в deleteCard: ${res.status}`);
+    });
+  }
+
+  renderLoading(buttonSelector, isLoading) {
+    const buttonSubmit = document.querySelector(buttonSelector);
     if (isLoading) {
-      btnSubmit.textContent = "Сохранение...";
+      buttonSubmit.textContent = "Сохранение...";
     } else {
-      btnSubmit.textContent = "Сохранить";
+      buttonSubmit.textContent = "Сохранить";
     }
   }
-
-  likeCounter(evt, cardData) {
-    if (evt.target.classList.contain("elements__like_active")) {
-      return setNewCard(cardData);
-    }
-  }
-
-  _addLikeCounter(evt) {
-    if (evt.target.classList.contain("elements__like_active")) {
-      return fetch(``);
-    }
-  }
-
-  _removeLikeCounter() {}
-
 }
