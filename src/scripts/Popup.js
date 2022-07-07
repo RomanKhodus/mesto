@@ -1,5 +1,6 @@
 export default class Popup {
   constructor(selector) {
+    
     this._selector = selector;
     this._popup = document.querySelector(selector);
     this._buttonClose = this._popup.querySelector(".popup__button-close");

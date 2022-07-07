@@ -12,6 +12,7 @@ import {
   profileName,
   profileEbout,
   API_CONFIG,
+  container
 } from "../utils/constants.js";
 import Card from "../scripts/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
@@ -20,6 +21,7 @@ import PopupWithImage from "../scripts/PopupWithImage.js";
 import Section from "../scripts/Section.js";
 import UserInfo from "../scripts/UserInfo.js";
 import Api from "../scripts/Api.js";
+import PopupWithConfirmation from "../scripts/popupWithConfirmation";
 
 //Создание обьекта api
 const api = new Api(API_CONFIG);
@@ -28,89 +30,86 @@ const api = new Api(API_CONFIG);
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   jobSelector: ".profile__job",
+  avatarSelector: ".profile__avatar",
 });
 
-const CreateCard = (
-  item,
-  selector,
-  { handleCardClick },
-  api,
-  userId,
-  popupDeletCard
-) => {
-  const cardObj = new Card(
-    item,
-    selector,
-    { handleCardClick },
-    api,
-    userId,
-    popupDeletCard
-  );
+const CreateCard = (...arg) => {
+  const cardObj = new Card(...arg);
   return cardObj.generateCard();
 };
 
 api.getUserInfo().then((user) => {
-  userInfo.setUserInfo(user); // Отображение актуальных данных пользователя в профиле
+  userInfo.setUserInfo(user);
   userInfo.setUserAvatar(user);
-  api
-    .getInitialCards() // Получение карточек с сервера
-    .then((initialCards) => {
-      const cardList = new Section( // Рендер карточек в контейне
-        {
-          items: initialCards,
-          renderer: (item) => {
-            const instanceCard = CreateCard(
-              // Создание карточки
-              item,
-              "#elements-template",
-              {
-                handleCardClick: () => {
-                  popupImage.open({
-                    image: item.link,
-                    name: item.name,
-                  });
-                },
-              },
-              api,
-              user._id
-            );
-            cardList.addItem(instanceCard); // Добавление карточки в контейнер
-          },
-        },
-        cardsContainer
-      );
-      cardList.renderItems(); // перебор карточек и запуск рендерера
-
-      const popupAddCard = new PopupWithForm({
-        // Попап новой карточки
-        selector: ".add-popup",
-        handleFormSubmit: (formValues) => {
-          api.renderLoading(".add-popup__button-submit", true);
-          api.setNewCard(formValues).then((item) => {
-            const card = CreateCard(item, "#elements-template", {
+  api.getInitialCards().then((initialCards) => {
+    const cardList = new Section(
+      {
+        items: initialCards,
+        renderer: (item) => {
+          const cardElement = CreateCard(
+            item,
+            "#elements-template",
+            {
               handleCardClick: () => {
                 popupImage.open({
                   image: item.link,
                   name: item.name,
                 });
               },
-            });
-            api.renderLoading(".add-popup__button-submit", false);
-            cardList.addItem(card);
-          });
+            },
+            api,
+            user._id,
+            popupConfirm
+          );
+          cardList.addItem(cardElement);
         },
-      });
-      popupAddCard.setEventListeners();
-
-      buttonAddCard.addEventListener("click", () => {
-        formAddCard.resetInputsErrors();
-        formAddCard.disabledSubmitButton();
-        popupAddCard.open();
-      });
-    });
+      },
+      cardsContainer
+    );
+    cardList.renderItems();
+  });
 });
 
-const popupProfile = new PopupWithForm({  //Профайл попап
+const popupAddCard = new PopupWithForm({
+  selector: ".add-popup",
+  handleFormSubmit: (formValues) => {
+    api.renderLoading(".add-popup__button-submit", true);
+    api.getUserInfo().then((user) => {
+      api
+        .setNewCard(formValues)
+        .then((item) => {
+          const cardElement = CreateCard(
+            item,
+            "#elements-template",
+            {
+              handleCardClick: () => {
+                popupImage.open({
+                  image: item.link,
+                  name: item.name,
+                });
+              },
+            },
+            api,
+            user._id,
+            popupConfirm
+          );
+          api.renderLoading(".add-popup__button-submit", false);
+          container.prepend(cardElement);
+          popupAddCard.close();
+        })
+    });
+  },
+});
+
+popupAddCard.setEventListeners();
+
+buttonAddCard.addEventListener("click", () => {
+  formAddCard.resetInputsErrors();
+  formAddCard.disabledSubmitButton();
+  popupAddCard.open();
+});
+
+const popupProfile = new PopupWithForm({
   selector: ".profile-popup",
   handleFormSubmit: (userData) => {
     api.renderLoading(".popup__button-submit", true);
@@ -124,28 +123,30 @@ const popupProfile = new PopupWithForm({  //Профайл попап
   },
 });
 popupProfile.setEventListeners();
-
-const popupImage = new PopupWithImage(".image-popup");  // Попап с изображением
-popupImage.setEventListeners();
-
-// Валидация форм
-const formAddCard = new FormValidator(options, formPopupAddCard);
-formAddCard.enableValidation();
-
-const formProfile = new FormValidator(options, formPopupProfile);
-formProfile.enableValidation();
-
-// Слушатели событий в глобальной области видимости
 buttonEditProfile.addEventListener("click", () => {
   formProfile.resetInputsErrors();
-
   formProfile.enableSubmitButton();
-
   api.getUserInfo().then((userInfo) => {
     nameInput.value = userInfo.name;
     jobInput.value = userInfo.about;
   });
-
   popupProfile.open();
 });
 
+const popupConfirm = new PopupWithConfirmation({
+  selector: ".remove-popup",
+  handlerCardDelet: (cardId) => {
+    api.renderLoading(".popup__button-submit", true);
+    api.deleteCard(cardId);
+    popupConfirm.close();
+  },
+});
+
+const popupImage = new PopupWithImage(".image-popup");
+popupImage.setEventListeners();
+
+const formProfile = new FormValidator(options, formPopupProfile);
+formProfile.enableValidation();
+
+const formAddCard = new FormValidator(options, formPopupAddCard);
+formAddCard.enableValidation();

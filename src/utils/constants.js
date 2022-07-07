@@ -19,6 +19,7 @@ export const API_CONFIG = {
 };
 
 export const cardsContainer = ".elements";
+export const container = document.querySelector(cardsContainer);
 
 export const buttonEditProfile = document.querySelector(
   ".profile__edit-button"

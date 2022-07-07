@@ -72,6 +72,22 @@ export default class Api {
     });
   }
 
+  addLike(cardId){
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в deleteCard: ${res.status}`);
+    });
+  }
+
+  removeLike(cardId) {
+    
+  }
+
   renderLoading(buttonSelector, isLoading) {
     const buttonSubmit = document.querySelector(buttonSelector);
     if (isLoading) {

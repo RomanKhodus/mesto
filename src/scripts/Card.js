@@ -1,10 +1,11 @@
 export default class Card {
-  constructor(item, selector, { handleCardClick }, api, userId, popupDeletCard) {
+  constructor(item, selector, { handleCardClick }, api, userId, popupConfirm ) {
     this._item = item;
     this._selector = selector;
     this._handleCardClick = handleCardClick;
     this._api = api;
     this._userId = userId;
+    this._popupConfirm = popupConfirm;
 
     this._element = this._getElement();
     this._elementImage = this._element.querySelector(".elements__image");
@@ -28,18 +29,17 @@ export default class Card {
     if (this._userId !== this._item.owner._id) {
       this._buttonDelete.remove();
     }
-    return this._element; 
+    return this._element;
   }
 
   _setEventListeners() {
     const buttonDelete = this._element.querySelector(".elements__delete");
     const buttonLike = this._element.querySelector(".elements__like");
-
+    
     buttonDelete.addEventListener("click", () => {
-      this._api.deleteCard(this._item._id);
-      this._handleDeleteCard();
+      this._popupConfirm.setEventListeners(this._item._id, this._element);
+      this._popupConfirm.open();
     });
-
     buttonLike.addEventListener("click", this._handleLikeToggle);
     this._elementImage.addEventListener("click", this._handleCardClick);
   }
