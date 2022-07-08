@@ -72,7 +72,7 @@ export default class Api {
     });
   }
 
-  addLike(cardId){
+  addLikes(cardId){
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this.headers,
@@ -85,7 +85,27 @@ export default class Api {
   }
 
   removeLike(cardId) {
-    
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в deleteCard: ${res.status}`);
+    });
+  }
+
+  getLikes(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+      method: "GET",
+      headers: this.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в getUserInfo: ${res.status}`);
+    });
   }
 
   renderLoading(buttonSelector, isLoading) {

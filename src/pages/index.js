@@ -12,7 +12,7 @@ import {
   profileName,
   profileEbout,
   API_CONFIG,
-  container
+  container,
 } from "../utils/constants.js";
 import Card from "../scripts/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
@@ -55,7 +55,7 @@ api.getUserInfo().then((user) => {
                   image: item.link,
                   name: item.name,
                 });
-              },
+              }
             },
             api,
             user._id,
@@ -75,28 +75,26 @@ const popupAddCard = new PopupWithForm({
   handleFormSubmit: (formValues) => {
     api.renderLoading(".add-popup__button-submit", true);
     api.getUserInfo().then((user) => {
-      api
-        .setNewCard(formValues)
-        .then((item) => {
-          const cardElement = CreateCard(
-            item,
-            "#elements-template",
-            {
-              handleCardClick: () => {
-                popupImage.open({
-                  image: item.link,
-                  name: item.name,
-                });
-              },
-            },
-            api,
-            user._id,
-            popupConfirm
-          );
-          api.renderLoading(".add-popup__button-submit", false);
-          container.prepend(cardElement);
-          popupAddCard.close();
-        })
+      api.setNewCard(formValues).then((item) => {
+        const cardElement = CreateCard(
+          item,
+          "#elements-template",
+          {
+            handleCardClick: () => {
+              popupImage.open({
+                image: item.link,
+                name: item.name,
+              });
+            }
+          },
+          api,
+          user._id,
+          popupConfirm
+        );
+        api.renderLoading(".add-popup__button-submit", false);
+        container.prepend(cardElement);
+        popupAddCard.close();
+      });
     });
   },
 });
@@ -117,6 +115,7 @@ const popupProfile = new PopupWithForm({
       .setUserInfo(userData)
       .then((userData) => {
         userInfo.setUserInfo(userData);
+        popupProfile.close();
       })
       .catch((err) => Promise.reject(`Ошибка: ${err.status}`))
       .finally(() => api.renderLoading(".popup__button-submit", false));
