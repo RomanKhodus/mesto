@@ -17,9 +17,8 @@
       <section class="profile">
         <div class="profile__info">
           <div class="profile__avatar-container">
-            <img src= "<%=require('./images/avatar.jpg')%>"  alt="Аватар автора" class="profile__avatar">
+            <img src= "" alt="Аватар автора" class="profile__avatar">
             <div class="profile__overlay"></div>
-            <!-- <div class="profile__overlay-icon"></div> -->
           </div>
           <div class="profile__namespace">
             <div class="profile__container">
@@ -60,16 +59,16 @@
     </div>
 
     <!-- popup аватара -->
-    <div class="popup add-popup">
-      <div class="popup__container add-popup__container">
-        <form class="popup__form add-form" name="formCard" novalidate>
+    <div class="popup avatar-popup">
+      <div class="popup__container">
+        <form class="popup__form add-form" name="formAvatar" novalidate>
           <fieldset class="popup__form-set">
-            <button type="button" class="popup__button-close add-popup__button-close"></button>
-            <h2 class="popup__header add-popup__header">Новое место</h2>
+            <button type="button" class="popup__button-close"></button>
+            <h2 class="popup__header add-popup__header">Обновить аватар</h2>
             <input type="url" id="link-input" class="popup__input popup__input_type_link" name="link" value=""
               placeholder="Ссылка на картинку" required>
             <span class="link-input-error popup__input-error"></span>
-            <button type="submit" class="popup__button-submit add-popup__button-submit">Создать</button>
+            <button type="submit" class="popup__button-submit avatar-popup__button-submit">Сохранить</button>
           </fieldset>
         </form>
       </div>
@@ -77,10 +76,10 @@
 
     <!-- popup добавления карточек -->
     <div class="popup add-popup">
-      <div class="popup__container add-popup__container">
+      <div class="popup__container">
         <form class="popup__form add-form" name="formCard" novalidate>
           <fieldset class="popup__form-set">
-            <button type="button" class="popup__button-close add-popup__button-close"></button>
+            <button type="button" class="popup__button-close"></button>
             <h2 class="popup__header add-popup__header">Новое место</h2>
             <input type="text" id="place-input" class="popup__input popup__input_type_place" name="name" value="" placeholder="Название"
               required minlength="2" maxlength="40">
@@ -108,7 +107,7 @@
       <div class="popup__container add-popup__container">
         <button type="button" class="popup__button-close"></button>
         <h2 class="popup__header add-popup__header">Вы уверены?</h2>
-        <button type="button" class="popup__button-submit">Да</button>
+        <button type="button" class="popup__button-submit remove-popup__button-submit">Да</button>
       </div>
     </div>
   </div>

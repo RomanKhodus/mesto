@@ -17,6 +17,8 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
   },
 };
+export const buttonAvatar = document.querySelector(".profile__avatar-container");
+export const imageAvatar = buttonAvatar.querySelector(".profile__avatar");
 
 export const cardsContainer = ".elements";
 export const container = document.querySelector(cardsContainer);
@@ -35,3 +37,5 @@ export const nameInput = formPopupProfile.querySelector("#name-input");
 export const jobInput = formPopupProfile.querySelector("#job-input");
 
 export const formPopupAddCard = document.forms.formCard;
+export const formPopupAvatar = document.forms.formAvatar;
+

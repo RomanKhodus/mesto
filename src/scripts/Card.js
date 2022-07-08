@@ -52,7 +52,6 @@ export default class Card {
     ) {
       return this._handleLikeAdd();
     } 
-    return console.log('пришел сюда');
   }
   _setEventListeners() {
     const buttonDelete = this._element.querySelector(".elements__delete");
