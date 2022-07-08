@@ -96,15 +96,16 @@ export default class Api {
     });
   }
 
-  getLikes(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
-      method: "GET",
+  setAvatar(link){
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
       headers: this.headers,
+      body: JSON.stringify({avatar: link})
     }).then((res) => {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка в getUserInfo: ${res.status}`);
+      return Promise.reject(`Ошибка в setUserInfo: ${res.status}`);
     });
   }
 
