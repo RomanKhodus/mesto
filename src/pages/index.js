@@ -16,13 +16,13 @@ import {
   container,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js.js";
+import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-import Section from "../components/Section.js.js";
+import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-import PopupWithConfirmation from "../components/popupWithConfirmation";
+import PopupWithConfirmation from "../components/popupWithConfirmation.js";
 
 //Создание обьекта api
 const api = new Api(API_CONFIG);

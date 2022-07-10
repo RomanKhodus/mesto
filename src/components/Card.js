@@ -53,11 +53,9 @@ export default class Card {
   }
 
   _setEventListeners() {
-    const buttonLike = this._element.querySelector(".elements__like");
-
     this._buttonDelete.addEventListener("click", this._handleDeleteClik);
 
-    buttonLike.addEventListener("click", () => {
+    this._elementLike.addEventListener("click", () => {
       if (this._elementLike.classList.contains("elements__like_active")) {
         this._api.removeLike(this._item._id).then((res) => {
           return (this._likeCounter.textContent = res.likes.length);
