@@ -8,20 +8,21 @@ import {
   imageAvatar,
   buttonEditProfile,
   buttonAddCard,
+  buttonConfirmPopup,
   formPopupAvatar,
   formPopupProfile,
   formPopupAddCard,
   API_CONFIG,
   container,
 } from "../utils/constants.js";
-import Card from "../scripts/Card.js";
-import FormValidator from "../scripts/FormValidator.js";
-import PopupWithForm from "../scripts/PopupWithForm.js";
-import PopupWithImage from "../scripts/PopupWithImage.js";
-import Section from "../scripts/Section.js";
-import UserInfo from "../scripts/UserInfo.js";
-import Api from "../scripts/Api.js";
-import PopupWithConfirmation from "../scripts/popupWithConfirmation";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js.js";
+import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
+import PopupWithConfirmation from "../components/popupWithConfirmation";
 
 //Создание обьекта api
 const api = new Api(API_CONFIG);
@@ -33,9 +34,10 @@ const userInfo = new UserInfo({
   avatarSelector: ".profile__avatar",
 });
 
-const CreateCard = (...arg) => {
-  const cardObj = new Card(...arg);
-  return cardObj.generateCard();
+const card = (...arg) => {
+  // const cardObj =
+  return new Card(...arg);
+  // return cardObj.generateCard();
 };
 
 api.getUserInfo().then((user) => {
@@ -48,7 +50,7 @@ api.getUserInfo().then((user) => {
         {
           items: initialCards,
           renderer: (item) => {
-            const cardElement = CreateCard(
+            const instanceCard = card(
               item,
               "#elements-template",
               {
@@ -58,12 +60,20 @@ api.getUserInfo().then((user) => {
                     name: item.name,
                   });
                 },
+                handleDeleteClik: () => {
+                  popupConfirm.open();
+                  popupConfirm.setSuccessHandler(() => {
+                    api.deleteCard(item._id).then(() => {
+                      instanceCard.deleteCard();
+                      popupConfirm.close();
+                    });
+                  });
+                },
               },
               api,
-              user._id,
-              popupConfirm
+              user._id
             );
-            cardList.addItem(cardElement);
+            cardList.addItem(instanceCard.generateCard());
           },
         },
         cardsContainer
@@ -76,12 +86,12 @@ api.getUserInfo().then((user) => {
 const popupAddCard = new PopupWithForm({
   selector: ".add-popup",
   handleFormSubmit: (formValues) => {
-    api.renderLoading(".add-popup__button-submit", true);
+    api.renderLoadingCard(".add-popup__button-submit", true);
     api.getUserInfo().then((user) => {
       api
         .setNewCard(formValues)
         .then((item) => {
-          const cardElement = CreateCard(
+          const instanceCard = card(
             item,
             "#elements-template",
             {
@@ -91,32 +101,46 @@ const popupAddCard = new PopupWithForm({
                   name: item.name,
                 });
               },
+              handleDeleteClik: () => {
+                popupConfirm.open();
+                popupConfirm.setSuccessHandler(() => {
+                  api.deleteCard(item._id).then(() => {
+                    instanceCard.deleteCard();
+                    popupConfirm.close();
+                  });
+                });
+              },
             },
             api,
-            user._id,
-            popupConfirm
+            user._id
           );
-          container.prepend(cardElement);
+          container.prepend(instanceCard.generateCard());
           popupAddCard.close();
         })
         .catch((err) => Promise.reject(`Ошибка: ${err.status}`))
         .finally(() => {
-          api.renderLoading(".avatar-popup__button-submit", false);
+          api.renderLoadingCard(".add-popup__button-submit", false);
         });
     });
   },
 });
 popupAddCard.setEventListeners();
+
 buttonAddCard.addEventListener("click", () => {
   formAddCard.resetInputsErrors();
   formAddCard.disabledSubmitButton();
   popupAddCard.open();
 });
 
+const popupConfirm = new PopupWithConfirmation({
+  selector: ".remove-popup"
+});
+popupConfirm.setEventListeners();
+
 const popupAvatar = new PopupWithForm({
   selector: ".avatar-popup",
   handleFormSubmit: (Data) => {
-    api.renderLoading(".avatar-popup__button-submit", true);
+    api.renderLoadingCard(".avatar-popup__button-submit", true);
     api
       .setAvatar(Data.link)
       .then((link) => {
@@ -124,7 +148,7 @@ const popupAvatar = new PopupWithForm({
         popupAvatar.close();
       })
       .catch((err) => Promise.reject(`Ошибка: ${err.status}`))
-      .finally(() => api.renderLoading(".avatar-popup__button-submit", false));
+      .finally(() => api.renderLoadingCard(".avatar-popup__button-submit", false));
   },
 });
 popupAvatar.setEventListeners();
@@ -136,7 +160,7 @@ buttonAvatar.addEventListener("click", () => {
 const popupProfile = new PopupWithForm({
   selector: ".profile-popup",
   handleFormSubmit: (userData) => {
-    api.renderLoading(".popup__button-submit", true);
+    api.renderLoadingCard(".popup__button-submit", true);
     api
       .setUserInfo(userData)
       .then((userData) => {
@@ -144,7 +168,7 @@ const popupProfile = new PopupWithForm({
         popupProfile.close();
       })
       .catch((err) => Promise.reject(`Ошибка: ${err.status}`))
-      .finally(() => api.renderLoading(".popup__button-submit", false));
+      .finally(() => api.renderLoadingCard(".popup__button-submit", false));
   },
 });
 popupProfile.setEventListeners();
@@ -156,15 +180,6 @@ buttonEditProfile.addEventListener("click", () => {
     jobInput.value = userInfo.about;
   });
   popupProfile.open();
-});
-
-const popupConfirm = new PopupWithConfirmation({
-  selector: ".remove-popup",
-  handlerCardDelet: (cardId) => {
-    api.renderLoading(".remove-popup__button-submit", true);
-    api.deleteCard(cardId);
-    popupConfirm.close();
-  },
 });
 
 const popupImage = new PopupWithImage(".image-popup");

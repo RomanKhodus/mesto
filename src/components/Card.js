@@ -2,18 +2,16 @@ export default class Card {
   constructor(
     item,
     selector,
-    { handleCardClick},
+    { handleCardClick, handleDeleteClik },
     api,
-    userId,
-    popupConfirm
+    userId
   ) {
     this._item = item;
     this._selector = selector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClik = handleDeleteClik;
     this._api = api;
     this._userId = userId;
-    this._popupConfirm = popupConfirm;
-
     this._element = this._getElement();
     this._likes = this._item.likes;
     this._elementImage = this._element.querySelector(".elements__image");
@@ -47,28 +45,26 @@ export default class Card {
   _cardIsLiked() {
     if (
       this._likes.some((user) => {
-        return user._id === this._userId
+        return user._id === this._userId;
       })
     ) {
       return this._handleLikeAdd();
-    } 
+    }
   }
+
   _setEventListeners() {
-    const buttonDelete = this._element.querySelector(".elements__delete");
     const buttonLike = this._element.querySelector(".elements__like");
 
-    buttonDelete.addEventListener("click", () => {
-      this._popupConfirm.setEventListeners(this._item._id, this._element);
-      this._popupConfirm.open();
-    });
+    this._buttonDelete.addEventListener("click", this._handleDeleteClik);
+
     buttonLike.addEventListener("click", () => {
       if (this._elementLike.classList.contains("elements__like_active")) {
-        this._api.removeLike(this._item._id).then(res=>{
-          return this._likeCounter.textContent = res.likes.length;
-        })
-          this._handleLikeRemove();
+        this._api.removeLike(this._item._id).then((res) => {
+          return (this._likeCounter.textContent = res.likes.length);
+        });
+        this._handleLikeRemove();
       } else {
-        this._api.addLikes(this._item._id).then(res=>{
+        this._api.addLikes(this._item._id).then((res) => {
           return (this._likeCounter.textContent = res.likes.length);
         });
         this._handleLikeAdd();
@@ -77,9 +73,9 @@ export default class Card {
     this._elementImage.addEventListener("click", this._handleCardClick);
   }
 
-  _handleDeleteCard() {
-    this._element.remove();
-    this._element = null;
+  deleteCard() {
+      this._element.remove();
+      this._element = null;
   }
 
   _handleLikeAdd() {

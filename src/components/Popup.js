@@ -8,7 +8,6 @@ export default class Popup {
 
   open() {
     this._popup.classList.add("popup_opened");
-
     document.addEventListener("keydown", (evt) =>
       this._handleEscClose(evt)
     );
@@ -23,6 +22,7 @@ export default class Popup {
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.close();
+
     }
   }
 
@@ -35,7 +35,7 @@ export default class Popup {
   // добавляет слушатель клика иконке закрытия попапа.
   // Модальное окно также закрывается при клике на затемнённую область вокруг формы.
   setEventListeners() {
-    this._buttonClose.addEventListener("click", () => this.close());
+    this._buttonClose.addEventListener("click", ()=> this.close());
     this._popup.addEventListener("mousedown", (evt) =>
       this._handleOverlayClickClose(evt)
     );
