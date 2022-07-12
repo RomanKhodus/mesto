@@ -35,7 +35,7 @@ export default class Api {
       headers: this.headers,
       body: JSON.stringify({
         name: user.name,
-        about: user.job,
+        about: user.about,
       }),
     }).then((res) => {
       return this._checkResponse(res);

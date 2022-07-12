@@ -83,10 +83,6 @@ export default class FormValidator {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
-
-    this._inputList.forEach((inputElement) => {
-      inputElement.classList.remove(this._inputInvalidClass);
-    });
   }
 
   enableValidation() {

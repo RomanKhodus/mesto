@@ -6,7 +6,6 @@ export default class Card {
     api,
     userId
   ) {
-    
     this._item = item;
     this._selector = selector;
     this._handleCardClick = handleCardClick;
@@ -76,9 +75,7 @@ export default class Card {
     this._elementImage.addEventListener("click", this._handleCardClick);
   }
 
-  createCard(){
-
-  }
+  createCard() {}
 
   deleteCard() {
     this._element.remove();

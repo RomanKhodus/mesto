@@ -155,8 +155,8 @@ const popupAvatar = new PopupWithForm({
     renderLoading(".avatar-popup__button-submit", true);
     api
       .setAvatar(data.link)
-      .then((res) => {
-        userInfo.setUserAvatar(res);
+      .then(({ name, about, avatar, _id }) => {
+        userInfo.setUserInfo(name, about, avatar, _id);
         popupAvatar.close();
       })
       .catch((err) => console.log(`Ошибка: ${err.status}`))
@@ -175,8 +175,8 @@ const popupProfile = new PopupWithForm({
     renderLoading(".popup__button-submit", true);
     api
       .setUserInfo(userData)
-      .then((userData) => {
-        userInfo.setUserInfo(userData);
+      .then(({ name, about, avatar, _id }) => {
+        userInfo.setUserInfo(name, about, avatar, _id);
         popupProfile.close();
       })
       .catch((err) => console.log(`Ошибка: ${err.status}`))
