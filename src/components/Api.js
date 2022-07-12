@@ -10,7 +10,7 @@ export default class Api {
     }
     return Promise.reject(`Ошибка в deleteCard: ${res.status}`);
   }
-  
+
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
       method: "GET",
@@ -51,6 +51,7 @@ export default class Api {
         link: cardData.link,
       }),
     }).then((res) => {
+      console.log("Карточка зашла");
       return this._checkResponse(res);
     });
   }
@@ -64,7 +65,7 @@ export default class Api {
     });
   }
 
-  addLikes(cardId){
+  addLikes(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this.headers,
@@ -82,22 +83,13 @@ export default class Api {
     });
   }
 
-  setAvatar(link){
+  setAvatar(link) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify({avatar: link})
+      body: JSON.stringify({ avatar: link }),
     }).then((res) => {
       return this._checkResponse(res);
     });
-  }
-
-  renderLoadingCard(buttonSelector, isLoading) {
-    const buttonSubmit = document.querySelector(buttonSelector);
-    if (isLoading) {
-      buttonSubmit.textContent = "Сохранение...";
-    } else {
-      buttonSubmit.textContent = "Сохранить";
-    }
   }
 }
