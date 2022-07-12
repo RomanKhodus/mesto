@@ -85,27 +85,23 @@ const createCard = (item, _id) => {
   return instanceCard;
 };
 
-const craeteInstanceSection = (...arg) => {
-  
-  return new Section(...arg);
-};
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      const userId = userInfo.getUserId();
+      const instanceCard = createCard(item, userId);
+      cardList.addItem(instanceCard.generateCard());
+    },
+  },
+  cardsContainer
+);
 
 api.getUserInfo().then(({ name, about, avatar, _id }) => {
   userInfo.setUserInfo(name, about, avatar, _id);
   api
     .getInitialCards()
     .then((initialCards) => {
-      const cardList = craeteInstanceSection(
-        {
-          items: initialCards,
-          renderer: (item) => {
-            const instanceCard = createCard(item, _id);
-            cardList.addItem(instanceCard.generateCard());
-          },
-        },
-        cardsContainer
-      );
-      cardList.renderItems();
+      cardList.renderItems(initialCards);
     })
     .catch((err) => console.log(`Ошибка: ${err.status}`));
 });
@@ -114,21 +110,10 @@ const popupAddCard = new PopupWithForm({
   selector: ".add-popup",
   handleFormSubmit: (formValues) => {
     renderLoading(".add-popup__button-submit", true);
-    const userId = userInfo.getUserId();
     api
       .setNewCard(formValues)
       .then((item) => {
-        const card = craeteInstanceSection(
-          {
-            items: item,
-            renderer: (item) => {
-              const instanceCard = createCard(item, userId);
-              card.addItem(instanceCard.generateCard());
-            },
-          },
-          cardsContainer
-        );
-        card.renderItem(item);
+        cardList.renderItem(item);
         popupAddCard.close();
       })
       .catch((err) => console.log(`Ошибка: ${err.status}`))
